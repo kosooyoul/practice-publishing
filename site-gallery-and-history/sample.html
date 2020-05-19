@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>JAYUNE</title>
+	<meta name="description" content="JAYUNE HOMEPAGE">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<link rel="shortcut icon" href="/assets/images/favicon.png" type="image/png">
+	<link rel="canonical" href="http://www.whatsyourmutantpower.com/">
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="sample.js"></script>
+
+	<meta data-action="group" data-action-group="section" data-action-group-behavior="go 0" data-action-trigger="keydown: 1;">
+	<meta data-action="group" data-action-group="section" data-action-group-behavior="go 1" data-action-trigger="keydown: 2;">
+	<meta data-action="group" data-action-group="section" data-action-group-behavior="go 2" data-action-trigger="keydown: 3;">
+
+	<meta data-action="group" data-action-group="section" data-action-group-behavior="prev" data-action-trigger="keydown: up;">
+	<meta data-action="group" data-action-group="section" data-action-group-behavior="next" data-action-trigger="keydown: down;">
+	<meta data-action="group" data-action-group="background" data-action-group-behavior="prev" data-action-trigger="keydown: left;">
+	<meta data-action="group" data-action-group="background" data-action-group-behavior="next" data-action-trigger="keydown: right;">
+
+<!--
+여행
+장난감
+스노우보드
+전동휠
+음악
+개발
+
+아이돌
+
+좋아하는 노래
+
+좋아하는 짤이나 동영상
+-->
+</head>
+<body>
+
+<style>
+
+nav>ul {padding: 0px; margin: 0px;}
+
+.ui-full-fixed {position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden;}
+.ui-full {position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden;}
+.ui-half-inline {}
+.ui-notext {line-height: 0px; font-size: 0px;}
+.ui-blackback {background-color: black; z-index: -1;}
+.ui-shadefront {background-color: rgba(0, 0, 0, 0.6); z-index: 1;}
+.ui-background {background-size: cover; z-index: -1;}
+.ui-ellipsis {white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+.ui-text-left {text-align: left;}
+.ui-text-center {text-align: center;}
+.ui-vfade-10 {-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), color-stop(10%, rgba(0,0,0,1)), color-stop(90%, rgba(0,0,0,1)), to(rgba(0,0,0,0)));}
+
+.ui-box-50 {display: inline-block; width: 50px; height: 50px; background-color: white;}
+.ui-box-200 {display: inline-block; width: 200px; height: 200px; background-color: white;}
+
+.pui-ball-menu-group {position: relative; top: 120px;}
+.pui-ball-menu {display: inline-block; margin: 5px 10px; color: white;}
+.pui-ball-menu-text {display: inline-block; position: relative; width: 80px; height: 20px; padding: 5px 5px 5px 15px; font-size: 14px; line-height: 20px; opacity: 0.5; transition: opacity 300ms; -webkit-transition: opacity 300ms;}
+.pui-ball-menu-text::before {position: absolute; content: ' '; left: 0px; top: 10px; width: 10px; height: 10px; border-radius: 5px; background-color: white;}
+.pui-ball-menu:hover .pui-ball-menu-text {opacity: 1;}
+
+
+.pui-full-section {display: inline-block; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; overflow: auto;}
+.pui-left-section {display: inline-block; position: absolute; left: 0px; right: 400px; top: 0px; height: 100%; float: left; overflow: auto;}
+.pui-right-section {display: inline-block; position: absolute; right: 0px; top: 0px; width: 400px; height: 100%; float: right; overflow: auto;}
+
+.pui-vstick-menu-group {position: absolute; left: 10px; bottom: 10px;}
+.pui-vstick-menu {display: inline-block; margin: 5px 10px; color: white;}
+.pui-vstick-menu-text {display: inline-block; width: 80px; height: 20px; padding: 5px 10px; font-size: 14px; line-height: 20px; border-left: 5px solid; opacity: 0.5; transition: opacity 300ms; -webkit-transition: opacity 300ms;}
+.pui-vstick-menu:hover .pui-vstick-menu-text {opacity: 1;}
+
+.active[data-group-parent='background'] {
+	opacity: 1;
+	transition: opacity 1000ms;
+	-webkit-transition: opacity 1000ms;
+}
+.deactive[data-group-parent='background'] {
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 1000ms;
+	-webkit-transition: opacity 1000ms;
+}
+.deactive.prev[data-group-parent='background'] {
+	visibility: visible;
+}
+.deactive.next[data-group-parent='background'] {
+	visibility: visible;
+}
+
+
+
+[data-group='header'] {
+	position: relative;
+	width: 100%;
+}
+[data-group-parent='header'] {
+	position: absolute;
+	width: 100%;
+	overflow: hidden;
+	transition: opacity 800ms;
+	-webkit-transition: opacity 800ms;
+}
+.active[data-group-parent='header'] {
+	opacity: 1;
+}
+.deactive[data-group-parent='header'] {
+	opacity: 0;
+}
+[data-group-parent='header'] p {
+	transition: transform 600ms;
+	-webkit-transition: -webkit-transform 600ms;
+}
+.active[data-group-parent='header'] p {
+	transform: translateY(0%);
+	-webkit-transform: translateY(0%);
+}
+.deactive[data-group-parent='header'] p {
+	transform: translateY(100%);
+	-webkit-transform: translateY(50%);
+}
+
+
+
+
+[data-group-parent='intro'] {
+	position: absolute;
+	left: 20px;
+	right: 20px;
+	text-align: center;
+	color: white;
+	max-width: 400px;
+	transition: opacity 500ms, clip 1000ms;
+	-webkit-transition: opacity 500ms, clip 1000ms;
+}
+.active[data-group-parent='intro'] {
+	clip: rect(0px, 400px, 400px, 0px);
+	opacity: 1;
+}
+.deactive[data-group-parent='intro'] {
+	visibility: hidden;
+	clip: rect(0px, 0px, 400px, 0px);
+}
+.deactive.prev[data-group-parent='intro'] {
+	visibility: visible;
+	clip: rect(0px, 0px, 400px, 0px);
+	opacity: 0;
+}
+.deactive.next[data-group-parent='intro'] {
+	visibility: visible;
+	clip: rect(0px, 0px, 400px, 0px);
+	opacity: 0;
+}
+
+[data-group='section'] {
+	overflow: hidden;
+}
+[data-group-parent='section'] {
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	transition: background-color 300ms;
+}
+.deactive[data-group-parent='section'] {
+	background-color: rgba(0, 0, 0, 0.2);
+	visibility: hidden;
+    z-index: -1;
+}
+.active.prev[data-group-parent='section'] {
+	visibility: visible;
+	animation-name: section-active-prev;
+	animation-duration: 800ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+.deactive.prev[data-group-parent='section'] {
+	visibility: visible;
+	animation-name: section-deactive-prev;
+	animation-duration: 400ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+.active.next[data-group-parent='section'] {
+	visibility: visible;
+	animation-name: section-active-next;
+	animation-duration: 800ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+.deactive.next[data-group-parent='section'] {
+	visibility: visible;
+	animation-name: section-deactive-next;
+	animation-duration: 400ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes section-active-prev {
+	from {transform: translateY(-100%); opacity: 1;} to {transform: translateY(0%); opacity: 1;}
+}
+@-webkit-keyframes section-deactive-prev {
+	from {transform: translateY(0%); opacity: 1;} to {transform: translateY(100%); opacity: 1; visibility: hidden}
+}
+@-webkit-keyframes section-active-next {
+	from {transform: translateY(100%); opacity: 1;} to {transform: translateY(0%); opacity: 1;}
+}
+@-webkit-keyframes section-deactive-next {
+	from {transform: translateY(0%); opacity: 1;} to {transform: translateY(-100%); opacity: 1; visibility: hidden;}
+}
+</style>
+
+<div class="ui-full-fixed ui-blackback">
+	<div class="ui-full" data-plugin="focuslayer" data-plugin-param="scale: 1.05;" data-group="background" data-action="group" data-action-group="background" data-action-group-behavior="init" data-action-trigger="ready;">
+		<div class="ui-full" data-group-parent="background" data-group-default>
+			<div class="ui-full ui-background" style="background-image: url('./assets/images/background_20160508_113840.jpg');"></div>
+		</div>
+		<div class="ui-full" data-group-parent="background">
+			<div class="ui-full ui-background" style="background-image: url('./assets/images/background_20160109_163716.jpg');"></div>
+		</div>
+		<div class="ui-full" data-group-parent="background">
+			<div class="ui-full ui-background" style="background-image: url('./assets/images/background_20121005_140938.jpg');"></div>
+		</div>
+		<div class="ui-full" data-group-parent="background">
+			<div class="ui-full ui-background" style="background-image: url('./assets/images/background_20140712_174253.jpg');"></div>
+		</div>
+		<div class="ui-full" data-group-parent="background">
+			<div class="ui-full ui-background" style="background-image: url('./assets/images/background_20150806_160900.jpg');"></div>
+		</div>
+		<div class="ui-full" data-group-parent="background">
+			<div class="ui-full ui-background" style="background-image: url('./assets/images/background_20160601_081608.jpg');"></div>
+		</div>
+	</div>
+	<div class="ui-full ui-shadefront"><div>
+</div>
+
+<header>
+	<div data-group="header" data-action="group" data-action-group="header" data-action-group-behavior="init" data-action-trigger="ready;">
+		<div data-group-parent="header" data-group-default>
+			<h1 style="color: white; text-align: center;">어느 한 자유로운 영혼</h1>
+			<p style="color: white; text-align: center;">나</p>
+		</div>
+		<div data-group-parent="header">
+			<h1 style="color: white; text-align: center;">겨울이 그리운 한여름</h1>
+			<p style="color: white; text-align: center;">2016년 7월 지금</p>
+		</div>
+		<div data-group-parent="header">
+			<h1 style="color: white; text-align: center;">바다와 하늘이 보이는 곳</h1>
+			<p style="color: white; text-align: center;">집구석</p>
+		</div>
+		<div data-group-parent="header">
+			<h1 style="color: white; text-align: center;">추억과 생활의 활력소</h1>
+			<p style="color: white; text-align: center;">잡다</p>
+		</div>
+		<div data-group-parent="header">
+			<h1 style="color: white; text-align: center;">자유롭게 즐겁게 고민하며</h1>
+			<p style="color: white; text-align: center;">나름대로</p>
+		</div>
+		<div data-group-parent="header">
+			<h1 style="color: white; text-align: center;">지루한 일상을 깨기 위해</h1>
+			<p style="color: white; text-align: center;">미래</p>
+		</div>
+	</div>
+	<nav class="pui-ball-menu-group ui-notext">
+		<ul class="ui-text-center">
+			<li class="ui-text-left pui-ball-menu">
+				<a class="ui-ellipsis pui-ball-menu-text" data-action="group" data-action-group="header" data-action-group-behavior="go 0" data-action-trigger="click; mouseover;">누가</a>
+			</li>
+			<li class="ui-text-left pui-ball-menu">
+				<a class="ui-ellipsis pui-ball-menu-text" data-action="group" data-action-group="header" data-action-group-behavior="go 1" data-action-trigger="click; mouseover;">언제</a>
+			</li>
+			<li class="ui-text-left pui-ball-menu">
+				<a class="ui-ellipsis pui-ball-menu-text" data-action="group" data-action-group="header" data-action-group-behavior="go 2" data-action-trigger="click; mouseover;">어디서</a>
+			</li>
+			<li class="ui-text-left pui-ball-menu">
+				<a class="ui-ellipsis pui-ball-menu-text" data-action="group" data-action-group="header" data-action-group-behavior="go 3" data-action-trigger="click; mouseover;">무엇을</a>
+			</li>
+			<li class="ui-text-left pui-ball-menu">
+				<a class="ui-ellipsis pui-ball-menu-text" data-action="group" data-action-group="header" data-action-group-behavior="go 4" data-action-trigger="click; mouseover;">어떻게</a>
+			</li>
+			<li class="ui-text-left pui-ball-menu">
+				<a class="ui-ellipsis pui-ball-menu-text" data-action="group" data-action-group="header" data-action-group-behavior="go 5" data-action-trigger="click; mouseover;">왜</a>
+			</li>
+		</ul>
+	</nav>
+	<!--
+	<input class="ui-searchbox" type="search" placeholder="해시태그로 검색하세요" data-action="show" data-action-show-target="search-history" data-action-trigger="keydown;">
+	<div data-id="search-history" data-action="storage" data-action-storage="local" data-action-storage-get="search-history" data-status="search-history" data-action-trigger="show;" style="display: none;">
+		<span data-status-template="">1</span>
+	</div>
+	-->
+</header>
+
+<main class="pui-main" style="position: fixed; left: 0px; top: 180px; bottom: 100px; width: 100%;">
+
+	<div class="pui-full-section">
+		<section data-group="section" data-action="group" data-action-group="section" data-action-group-behavior="init" data-action-trigger="ready;" style="position: absolute; left: 0px; right: 0px; top: 0px; margin: 20px; bottom: 0px;">
+			<article data-group-parent="section" data-group="intro" data-action="group" data-action-group="intro" data-action-group-behavior="init" data-action-trigger="ready;">
+				<article>
+					<h2>무얼할까</h2>
+				</article>
+				<article data-group-parent="intro" data-group-default>
+					<h2>기억의 공간</h2>
+					<p class="ui-text-left">한 자유로운 영혼의 지나간 기억을 보관하고 앞으로의 일들을 기억하고 추억으로 남기기 위한 공간. 일기장을 대신한 기억의 공간.</p>
+					<button data-action="group" data-action-group="intro" data-action-group-behavior="next">안되요 안되요</button>
+					<button data-action="group" data-action-group="intro" data-action-group-behavior="next">안되요 안되요</button>
+				</article>
+				<article data-group-parent="intro">
+					<h2>자유로운 영혼이 쉬는 곳</h2>
+					<p class="ui-text-left">지친 하루 지루한 일상을 깨기 위한 휴식 공간. 생활의 활력소를 공유하는 공간. 자기계발을 위한 공간.</p>
+					<button data-action="group" data-action-group="intro" data-action-group-behavior="next">지우고 지워도</button>
+					<button data-action="group" data-action-group="intro" data-action-group-behavior="next">지우고 지워도</button>
+				</article>
+				<article data-group-parent="intro">
+					<h2>영혼이여 깨어나라</h2>
+					<p class="ui-text-left">자유를 위해 포기하지 않고 대비하고 계획하는 공간. 자기계발을 위한 공간.</p>
+					<button data-action="group" data-action-group="intro" data-action-group-behavior="next">잘가요 잘가요</button>
+					<button data-action="group" data-action-group="intro" data-action-group-behavior="next">슬프고 슬프다</button>
+				</article>
+
+				<article>
+					<h2>세계 여행 지도</h2>
+				</article>
+				<article>
+					<h2>위젯 - 시계</h2>
+				</article>
+				<article>
+					<h2>위젯 - 좋아하는 노래(유튭)</h2>
+				</article>
+				<article>
+					<h2>위젯 - 바이오리듬</h2>
+				</article>
+			</article>
+
+			<article data-group-parent="section">
+
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+				<div class="ui-box-200">Contents</div>
+
+
+			</article>
+			<article class="ui-vfade-10" data-group-parent="section" data-group-default style="overflow: auto;">
+				<div style="position: relative; width: 100%; height: 100%;">
+
+					<h2 style="text-align: center; color: white; padding-top: 100px; padding-bottom: 100px;">History</h2>
+
+					<div style="position: relative;">
+						<div class="ui-notext" style="position: relative; min-height: 300px; padding-top: 30px; padding-bottom: 30px;">
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: right; margin-right: 80px; padding-right: 20px;">
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+								</div>
+							</div>
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: left; margin-left: 80px; padding-left: 20px;">
+									<h3>2016.07.05</h3>
+									<p>asdasdsadaadsfasdfsdaddas</p>
+								</div>
+							</div>
+							<div style="position: absolute; width: 1px; left: 50%; top: 100px; bottom: 0px; background: white;"></div>
+							<div style="position: absolute; width: 100px; height: 100px; left: 50%; top: 0px; margin-left: -54px; border: 4px solid white; border-radius: 100%; overflow: hidden; box-shadow: 0px 0px 30px 10px white;">
+								<img src="./assets/images/background_20160601_081608.jpg" width="100%" height="100%">
+							</div>
+						</div>
+					</div>
+					<div style="position: relative;">
+						<div class="ui-notext" style="position: relative; min-height: 300px; padding-top: 30px; padding-bottom: 30px;">
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: right; margin-right: 80px; padding-right: 20px;">
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+								</div>
+							</div>
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: left; margin-left: 80px; padding-left: 20px;">
+									<h3>2015.07.05</h3>
+									<p>테스트 1</p>
+								</div>
+							</div>
+							<div style="position: absolute; width: 1px; left: 50%; top: 100px; bottom: 0px; background: white;"></div>
+							<div style="position: absolute; width: 100px; height: 100px; left: 50%; top: 0px; margin-left: -54px; border: 4px solid white; border-radius: 100%; overflow: hidden;">
+								<img src="./assets/images/background_20160601_081608.jpg" width="100%" height="100%">
+							</div>
+						</div>
+					</div>
+					<div style="position: relative;">
+						<div class="ui-notext" style="position: relative; min-height: 300px; padding-top: 30px; padding-bottom: 30px;">
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: right; margin-right: 80px; padding-right: 20px;">
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+								</div>
+							</div>
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: left; margin-left: 80px; padding-left: 20px;">
+									<h3>2014.07.05</h3>
+									<p>테스트 2</p>
+								</div>
+							</div>
+							<div style="position: absolute; width: 1px; left: 50%; top: 100px; bottom: 0px; background: white;"></div>
+							<div style="position: absolute; width: 100px; height: 100px; left: 50%; top: 0px; margin-left: -54px; border: 4px solid white; border-radius: 100%; overflow: hidden;">
+								<img src="./assets/images/background_20160601_081608.jpg" width="100%" height="100%">
+							</div>
+						</div>
+					</div>
+					<div style="position: relative;">
+						<div class="ui-notext" style="position: relative; min-height: 300px; padding-top: 30px; padding-bottom: 30px;">
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: right; margin-right: 80px; padding-right: 20px;">
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+								</div>
+							</div>
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: left; margin-left: 80px; padding-left: 20px;">
+									<h3>2013.07.05</h3>
+									<p>테스트 3</p>
+								</div>
+							</div>
+							<div style="position: absolute; width: 1px; left: 50%; top: 100px; bottom: 0px; background: white;"></div>
+							<div style="position: absolute; width: 100px; height: 100px; left: 50%; top: 0px; margin-left: -54px; border: 4px solid white; border-radius: 100%; overflow: hidden;">
+								<img src="./assets/images/background_20160601_081608.jpg" width="100%" height="100%">
+							</div>
+						</div>
+					</div>
+					<div style="position: relative;">
+						<div class="ui-notext" style="position: relative; min-height: 300px; padding-top: 30px; padding-bottom: 30px;">
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: right; margin-right: 80px; padding-right: 20px;">
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+								</div>
+							</div>
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: left; margin-left: 80px; padding-left: 20px;">
+									<h3>2012.07.05</h3>
+									<p>테스트 4</p>
+								</div>
+							</div>
+							<div style="position: absolute; width: 1px; left: 50%; top: 100px; bottom: 0px; background: white;"></div>
+							<div style="position: absolute; width: 100px; height: 100px; left: 50%; top: 0px; margin-left: -54px; border: 4px solid white; border-radius: 100%; overflow: hidden;">
+								<img src="./assets/images/background_20160601_081608.jpg" width="100%" height="100%">
+							</div>
+						</div>
+					</div>
+					<div style="position: relative;">
+						<div class="ui-notext" style="position: relative; min-height: 300px; padding-top: 30px; padding-bottom: 30px;">
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: right; margin-right: 80px; padding-right: 20px;">
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+									<div class="ui-box-50"></div>
+								</div>
+							</div>
+							<div style="position: relative; display: inline-block; width: 50%; font-size: 14px; line-height: 100%; right: 0px; vertical-align: top;">
+								<div style="color: white; right: 0px; text-align: left; margin-left: 80px; padding-left: 20px;">
+									<h3>2011.07.05</h3>
+									<p>테스트 5</p>
+								</div>
+							</div>
+							<div style="position: absolute; width: 1px; left: 50%; top: 100px; bottom: 0px; background: white;"></div>
+							<div style="position: absolute; width: 100px; height: 100px; left: 50%; top: 0px; margin-left: -54px; border: 4px solid white; border-radius: 100%; overflow: hidden;">
+								<img src="./assets/images/background_20160601_081608.jpg" width="100%" height="100%">
+							</div>
+							<div style="position: absolute; width: 20px; height: 20px; left: 50%; bottom: 0px; margin-left: -10px; background-color: white; border-radius: 100%; overflow: hidden;"></div>
+						</div>
+					</div>
+
+					<h2 style="text-align: center; color: white; padding-top: 100px; padding-bottom: 100px;">Born</h2>
+
+				</div>
+			</article>
+			<article data-group-parent="section">cherry</article>
+		</section>
+	</div>
+
+</main>
+
+<div class="pui-hud">
+	<nav class="pui-vstick-menu-group ui-notext">
+		<ul>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="background" data-action-group-behavior="go 0" data-action-trigger="click; mouseover;">E-UNICYCLE</a>
+			</li>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="background" data-action-group-behavior="go 1" data-action-trigger="click; mouseover;">SNOW</a>
+			</li>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="background" data-action-group-behavior="go 2" data-action-trigger="click; mouseover;">TURKEY</a>
+			</li>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="background" data-action-group-behavior="go 3" data-action-trigger="click; mouseover;">OSAKA</a>
+			</li>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="background" data-action-group-behavior="go 4" data-action-trigger="click; mouseover;">GUNSAN</a>
+			</li>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="background" data-action-group-behavior="go 5" data-action-trigger="click; mouseover;">HAEUNDAE</a>
+			</li>
+		</ul>
+	</nav>
+
+	<nav class="pui-vstick-menu-group ui-notext" style="bottom: 60px;">
+		<ul>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="section" data-action-group-behavior="go 0" data-action-trigger="click; mouseover;">V-Talk</a>
+			</li>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="section" data-action-group-behavior="go 1" data-action-trigger="click; mouseover;">PHOTO</a>
+			</li>
+			<li class="pui-vstick-menu">
+				<a class="ui-ellipsis pui-vstick-menu-text" data-action="group" data-action-group="section" data-action-group-behavior="go 2" data-action-trigger="click; mouseover;">HISTORY</a>
+			</li>
+		</ul>
+	</nav>
+
+<div>
+
+
+<!--
+
+	<div class="box50" data-bind="innertext: date;" data-bind-delay="0" data-bind-trigger="period: 30ms; mouseover: none;"></div>
+
+	<div class="box50" data-action="anchor" data-action-anchor-href="http://www.ahyane.net" data-action-anchor-target="_blank" data-action-delay="0" data-action-trigger="click;">s10</div>
+
+	<br>
+
+	<div class="box50" data-action="jsonp" data-action-jsonp="http://www.ahyane.net/" data-action-jsonp-query="more: 2;" data-action-jsonp-to="assign: data" data-action-delay="0" data-action-trigger="click;">s10</div>
+-->
+</body>
+</html>

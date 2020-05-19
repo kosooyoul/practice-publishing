@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<script type="text/javascript" src="sample.js"></script>
+
+	<meta data-action="group" data-action-param="sample:go:0" data-action-delay="0" data-action-trigger="keydown: 1;">
+	<meta data-action="group" data-action-param="sample:go:1" data-action-delay="0" data-action-trigger="keydown: 2;">
+	<meta data-action="group" data-action-param="sample:go:2" data-action-delay="0" data-action-trigger="keydown: 3;">
+	<meta data-action="group" data-action-param="sample:prev" data-action-delay="0" data-action-trigger="keydown: up;">
+	<meta data-action="group" data-action-param="sample:next" data-action-delay="0" data-action-trigger="keydown: down;">
+</head>
+<body>
+
+<style>
+[data-group-parent='sample'] {
+	width: 100px;
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	border: 1px solid;
+	margin: 5px;
+	padding: 5px;
+	background: white;
+	transition: 300ms all, 10ms color;
+}
+.active[data-group-parent='sample'] {
+	opacity: 1;
+	transform: translateX(30px) rotate(-8deg) translateY(-5px);
+	color: red;
+	font-weight: 1200;
+}
+.deactive[data-group-parent='sample'] {
+	opacity: 1;
+	transform: rotate(8deg) translateY(-8px);
+}
+.box50 {
+	display: inline-block; width: 50px; height: 50px; border: 1px solid;
+}
+</style>
+
+	<div data-group="sample" data-action="group" data-action-param="sample:init" data-action-trigger="ready;">
+		<div data-group-parent="sample" data-group-default>apple</div>
+		<div data-group-parent="sample" data-class="active" data-class-="" data-class-delay="0" data-action-trigger="active: status=1;" data-class-trigger="active: status=12;">banana</div>
+		<div data-group-parent="sample">cherry</div>
+		<div data-group-parent="sample">durian</div>
+		<div data-group-parent="sample">elderberry</div>
+		<div data-group-parent="sample">fig</div>
+		<div data-group-parent="sample">grape</div>
+		<div data-group-parent="sample">honeydew melon</div>
+		<div data-group-parent="sample">iceberg lettuce</div>
+		<div data-group-parent="sample">jerusalem artichoke</div>
+		<div data-group-parent="sample">kiwi</div>
+	</div>
+
+	<div class="box50" data-action="group" data-action-param="sample:go:0" data-action-delay="0" data-action-trigger="mouseover: none">0</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:1" data-action-delay="0" data-action-trigger="mouseover: none;">1</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:2" data-action-delay="0" data-action-trigger="mouseover: none;">2</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:3" data-action-delay="0" data-action-trigger="mouseover: none;">3</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:4" data-action-delay="0" data-action-trigger="mouseover: none;">4</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:5" data-action-delay="0" data-action-trigger="mouseover: none;">5</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:6" data-action-delay="0" data-action-trigger="mouseover: none;">6</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:7" data-action-delay="0" data-action-trigger="mouseover: none;">7</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:8" data-action-delay="0" data-action-trigger="mouseover: none;">8</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:9" data-action-delay="0" data-action-trigger="mouseover: none;">9</div>
+	<div class="box50" data-action="group" data-action-param="sample:go:10" data-action-delay="0" data-action-trigger="mouseover: none;">10</div>
+
+</body>
+</html>
