@@ -2,8 +2,8 @@
 
 function downloadJSAtOnload(src) {var element = document.createElement("script"); element.src = src; (document.head || document.body).appendChild(element);}
 function evalWithinContext(context, code) {(function(code) {eval(code);}).call(context, code);}
-downloadJSAtOnload('http://www.ahyane.net/vr/js/Projector.js');
-downloadJSAtOnload('http://www.ahyane.net/vr/js/CanvasRenderer.js');
+downloadJSAtOnload('./js/Projector.js');
+downloadJSAtOnload('./js/CanvasRenderer.js');
 
 window.requestAnimFrame = (function(){
 	return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function( callback ) {window.setTimeout(callback, 1000 / 60);};
