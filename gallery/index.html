@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>My Gallery</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
+
+<style>
+.slide {
+	display: none;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	overflow: hidden;
+}
+.slide.on, .slide.hiding {
+	display: block;
+}
+.slide img {
+	display: none;
+}
+.slide.on img, .slide.hiding img {
+	display: block;
+	position: absolute;
+/*	left: 50%;
+	top: 50%;*/
+	box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.5);
+}
+.aurora-box {
+	box-shadow: 0px 0px 5px black;
+}
+.aurora-box:hover {
+	box-shadow: 0px 0px 5px 2px rgba(0, 200, 255, 1);
+}
+.aurora-text {
+	text-shadow: 0px 0px 5px black;
+}
+.aurora-text:hover {
+	text-shadow: 0px 0px 5px rgba(0, 200, 255, 1);
+}
+.aurora-text {
+	color: rgba(255, 255, 255, 0.7);
+}
+.aurora-text:hover {
+	color: white;
+}
+.aurora-box * {
+	opacity: 0.7;
+}
+.aurora-box:hover * {
+	opacity: 1;
+}
+</style>
+
+</head>
+<body style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">
+
+<div id="gallery" style="background-color: rgb(30,30,30); width: 100%; height: 100%; position: absolute; left: 0px; top: 0px;">
+	<div class="slide">
+		<img src="http://cfile2.uf.tistory.com/image/1763763B4FF8C7092F1521">
+	</div>
+	<div class="slide">
+		<img src="https://t1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/2Vw/image/AzBNQ6nEO-NimEn9z-2BgrqSwi0.jpg">
+	</div>
+	<div class="slide">
+		<img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/colorful-of-dahlia-pink-flower-in-beautiful-garden-royalty-free-image-825886130-1554743243.jpg">
+	</div>
+	<div class="slide">
+		<img src="https://t1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/16Sg/image/57Z8R8ddbg5vEo9kaC_n-AoZEuk.jpg">
+	</div>
+	<div class="slide">
+		<img src="http://cfile24.uf.tistory.com/image/182709274A2DF2330C604D">
+	</div>
+	<div class="slide">
+		<img src="http://cfs9.blog.daum.net/image/31/blog/2007/11/19/22/11/47418b5f92d6f&filename=![CDATA[45d5636560023.jpg]]">
+	</div>
+</div>
+
+<!-- Buttons -->
+<button class="aurora-text" onclick="prev()" style="position: absolute; z-index: 1000; top: 50%; left: 10px; background: none; border: none; font-weight: bold; font-size: 16px; outline: none; cursor: pointer;">Prev</button>
+<button class="aurora-text" onclick="next()" style="position: absolute; z-index: 1000; top: 50%; right: 10px; background: none; border: none; font-weight: bold; font-size: 16px; outline: none; cursor: pointer;">Next</button>
+
+<button class="button-fullscreen aurora-box" style="position: absolute; z-index: 1000; top: 10px; right: 10px; background: black; border: none; font-weight: bold; font-size: 20px; outline: none; margin: 0px; padding: 0px; width: 20px; height: 20px; cursor: pointer;"><img class="off" src="./images/partscreen.png" width="20" height="20" style="display: none; position: absolute; left: 0px; top: 0px;"><img class="on" src="./images/fullscreen.png" width="20" height="20" style="position: absolute; left: 0px; top: 0px;"></button>
+
+<button class="button-size aurora-text" style="position: absolute;z-index: 1000;top: 10px;right: 60px;background: none;border: none;font-weight: bold;font-size: 16px;outline: none;margin: 0px;padding: 0px;height: 20px;cursor: pointer;line-height: 20px;"></button>
+
+<button class="button-page aurora-text" style="position: absolute;z-index: 1000;top: 10px;left: 50%; width: 100px; background: none;border: none;font-weight: bold;font-size: 16px;outline: none;margin: 0px; margin-left: -50px;padding: 0px;height: 20px;cursor: pointer;line-height: 20px;"></button>
+
+<script>
+function toggleFullScreen(elem) {
+    // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+    if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
+        if (elem.requestFullScreen) {
+            elem.requestFullScreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullScreen) {
+            elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+$('.button-fullscreen').click(function (evt) {
+	var button = $(evt.currentTarget);
+	var on = button.find('.on');
+	var off = button.find('.off');
+
+	if (on.is(':visible')) {
+		on.fadeOut();
+		off.fadeIn();
+	} else {
+		on.fadeIn();
+		off.fadeOut();
+	}
+
+	toggleFullScreen(document.body);
+});
+
+$(document).on ('mozfullscreenchange webkitfullscreenchange fullscreenchange resize',function(){
+	var button = $('.button-fullscreen');
+	var on = button.find('.on');
+	var off = button.find('.off');
+
+	var fullscreen = !!(document.fullScreen || document.mozFullScreen || document.msFullscreenEnabled || document.webkitIsFullScreen);
+
+	if (fullscreen) {
+		on.fadeOut();
+		off.fadeIn();
+	} else {
+		on.fadeIn();
+		off.fadeOut();
+	}
+ });
+
+setInterval(function() {
+	var button = $('.button-fullscreen');
+	var on = button.find('.on');
+	var off = button.find('.off');
+
+	var fullscreen = !!(document.fullScreen || document.mozFullScreen || document.msFullscreenElement || document.webkitIsFullScreen);
+	var currfullscreen = !on.is(':visible');
+
+	if (fullscreen == currfullscreen) return;
+
+	if (fullscreen) {
+		on.fadeOut();
+		off.fadeIn();
+	} else {
+		on.fadeIn();
+		off.fadeOut();
+	}
+}, 200);
+
+$('.button-size').click(function (evt) {
+	var button = $(evt.currentTarget);
+	var scale = button.data('scale') || 100;
+	var option = button.data('option') || 'contain';
+
+	if (option == 'contain') button.data('option', option = 'cover');
+	else if (option == 'cover') button.data('option', option = 'manually').data('scale', scale = 100);
+	else if (option == 'manually') button.data('option', option = 'contain');
+
+	updateButtonSize();
+
+	applyCurrentImage({'scale': scale, 'option': option});
+});
+
+function updateButtonSize(obj) {
+	var button = $('.button-size');
+	var scale = button.data('scale') || 100;
+	var option = button.data('option') || 'contain';
+
+	if (obj && obj.scale) button.data('scale', scale = obj.scale);
+	if (obj && obj.option) button.data('option', option = obj.option);
+
+	if (option == 'contain') button.text('Contain');
+	else if (option == 'cover') button.text('Cover');
+	else if (option == 'manually') button.text(scale + ' %');
+	else if (option == 'error') button.text('Error');
+	
+	if (option == 'error') {
+		button.css('color', 'red');
+	} else {
+		button.css('color', '');
+	}
+}
+
+function updateButtonPage(obj) {
+	var button = $('.button-page');
+
+	button.text(obj.index + ' / ' + obj.count);
+}
+
+var app = {};
+app.index = 0;
+app.count = 0;
+
+function init() {
+	app.index = 0;
+	app.count = $('.slide').length;
+
+	var start = $('.slide').eq(app.index).show().addClass('on');
+	var img = start.find('img');
+
+	updateButtonPage({'index': app.index + 1, 'count': app.count});
+
+	initImage(img);
+} init();
+
+function initImage(img) {
+	app.scale = 100;
+	app.option = img.data('option') == 'error'? 'error': 'contain';
+	
+	img.data('scale', app.scale);
+	img.data('option', app.option);
+	repositionCenter(img);
+	resizeImage(img);
+
+	updateButtonSize({'scale': app.scale, 'option': app.option});
+}
+
+function _swap(fromSlide, toSlide) {
+	$('.hiding').stop().hide().removeClass('hiding');
+	toSlide.stop().css('z-index', 1).addClass('on').hide().fadeIn(1000);
+	fromSlide.stop().css('z-index', 0).addClass('hiding').removeClass('on').show().fadeOut(1000, function() {fromSlide.removeClass('hiding');});
+
+	var img = $('.slide.on img');
+	initImage(img);
+
+	var index = $('.slide').index(toSlide);
+	updateButtonPage({'index': index + 1, 'count': app.count});
+}
+
+function next() {
+	var curr = $('.slide.on');
+	var next = curr.next();
+
+	if (next.length == 0) next = $('.slide:not(.on)').first();
+	if (next.length > 0) _swap (curr, next);
+}
+
+function prev() {
+	var curr = $('.slide.on');
+	var prev = curr.prev();
+
+	if (prev.length == 0) prev = $('.slide:not(.on)').last();
+	if (prev.length > 0) _swap (curr, prev);
+}
+
+function go(index) {
+	var curr = $('.slide.on');
+	var next = $('.slide').eq(index).filter(':not(.on)');
+
+	if (next.length > 0) _swap (curr, next);
+}
+
+$('.slide.on img').on('load', function(evt) {
+	var img = $(evt.currentTarget);
+	repositionCenter(img);
+	resizeImage(img);
+});
+
+$(document).on('wheel', '.slide', function(evt) {
+	var img = $(evt.currentTarget).find('img');
+	var scale = parseInt(img.data('scale')) || 100;
+	
+	if (img.data('option') == 'error') {
+		return;
+	}
+
+	var normalizedDelta;
+	if (event.wheelDelta) {
+		normalizedDelta = (event.wheelDelta % 120) == 0 ? event.wheelDelta / 120 : event.wheelDelta / 12;
+	} else {
+		var rawAmmount = event.deltaY ? event.deltaY : event.detail;
+		if (window.innerHeight) {
+			normalizedDelta = -Math.round(rawAmmount / (window.innerHeight * 0.15));
+		console.log(rawAmmount, window.innerHeight, normalizedDelta);
+		} else {
+			normalizedDelta = -(rawAmmount % 3 ? rawAmmount * 10 : rawAmmount / 3);
+		}
+	}
+
+	scale += normalizedDelta * 10;
+	if (scale < 10) {
+		scale = 10;
+	}
+
+	img.data('scale', scale);
+	img.data('option', 'manually');
+
+	resizeImage(img, true, function() {checkBoundingImage(img, 'center', true)});
+
+	updateButtonSize({'scale': scale, 'option': 'manually'});
+});
+
+function applyCurrentImage(obj) {
+	var img = $('.slide.on img');
+	img.data('scale', obj.scale);
+	img.data('option', obj.option);
+
+	resizeImage(img, true, function() {checkBoundingImage(img, 'center', true)});
+}
+
+$(window).on('resize', function(evt) {
+	var img = $('.slide.on img');
+	resizeImage(img, false, function() {checkBoundingImage(img, 'center', false)});
+});
+
+function repositionCenter(img, animate) {
+	var parent = img.parent();
+	var parentWidth = parent.width();
+	var parentHeight = parent.height();
+
+	var currentWidth = img.width();
+	var currentHeight = img.height();
+
+	var cssObject = {
+		left: (parentWidth - currentWidth) / 2,
+		top: (parentHeight - currentHeight) / 2
+	};
+
+	img.stop();
+
+	if (!!animate) {
+		img.animate(cssObject);
+	} else {
+		img.css(cssObject);
+	}
+}
+
+function resizeImage(img, animate, nextfunc) {
+	var parent = img.parent();
+	var scaleRatio = parseInt(img.data('scale') || 100) / 100;
+	var option = img.data('option') || 'contain'; // 'contain' | 'cover' | 'manually'
+
+	var parentWidth = parent.width();
+	var parentHeight = parent.height();
+	var parentRatio = parentWidth / parentHeight;
+
+	var imageWidth = img.prop('naturalWidth');
+	var imageHeight = img.prop('naturalHeight');
+	var imageRatio = imageWidth / imageHeight;
+
+	if (imageWidth == 0 || imageHeight == 0) return;
+	
+	var currentWidth = img.width();
+	var currentHeight = img.height();
+
+	var width;
+	var height;
+
+	if (option == 'contain') {
+		if (parentRatio < imageRatio) {
+			width = parentWidth;
+			height = parentWidth / imageRatio;
+		} else {
+			width = parentHeight * imageRatio;
+			height = parentHeight;
+		}
+	} else if(option == 'cover') {
+		if (parentRatio > imageRatio) {
+			width = parentWidth;
+			height = parentWidth / imageRatio;
+		} else {
+			width = parentHeight * imageRatio;
+			height = parentHeight;
+		}
+	} else if(option == 'manually') {
+		width = imageWidth * scaleRatio;
+		height = imageHeight * scaleRatio;
+	} else if(option == 'error'){
+		width = imageWidth;
+		height = imageHeight;
+	} else {
+		width = imageWidth;
+		height = imageHeight;
+	}
+
+	var cssObject = {
+		width: width,
+		height: height,
+		left: img.position().left + (currentWidth - width) / 2,
+		top: img.position().top + (currentHeight - height) / 2
+	};
+
+	img.stop();
+
+	if (!!animate) {
+		img.animate(cssObject, nextfunc);
+	} else {
+		img.css(cssObject);
+		nextfunc instanceof Function && nextfunc();
+	}
+}
+
+function checkBoundingImage(img, bounce, animate) {
+	var parent = img.parent();
+
+	var parentWidth = parent.width();
+	var parentHeight = parent.height();
+
+	var left = img.position().left;
+	var top = img.position().top;
+	var width = img.width();
+	var height = img.height();
+//console.log(width)
+	var targetLeft = left;
+	var targetTop = top;
+
+	var cssObject = {};
+
+	if (parentWidth < width) {
+		if (left < parentWidth - width) cssObject.left = parentWidth - width;
+		else if (left > 0) cssObject.left = 0;
+	} else {
+		if (bounce == 'center') { // Center
+			if (left !=  (parentWidth - width) / 2) cssObject.left = (parentWidth - width) / 2;
+		} else if (bounce == 'border') {
+			if (left < 0) cssObject.left = 0;
+			else if (left > parentWidth - width) cssObject.left = parentWidth - width;
+		}
+	}
+
+	if (parentHeight < height) {
+		if (top < parentHeight - height) cssObject.top = parentHeight - height;
+		else if (top > 0) cssObject.top = 0;
+	} else {
+		if (bounce == 'center') { // Center
+			if (top !=  (parentHeight - height) / 2) cssObject.top = (parentHeight - height) / 2;
+		} else if (bounce == 'border') {
+			if (top < 0) cssObject.top = 0;
+			else if (top > parentHeight - height) cssObject.top = parentHeight - height;
+		}
+	}
+
+	img.stop();
+
+	if (!!animate) {
+		img.animate(cssObject);
+	} else {
+		img.css(cssObject);
+	}
+}
+
+
+(function() {
+	var $dragging = null;
+	var $dragX = 0;
+	var $dragY = 0;
+	var speedX = [];
+	var speedY = [];
+var lastmovetime = +new Date();
+	$(document).on("mousemove", function(e) {
+//console.log(1);
+	        if (!$dragging) return;
+
+	             $dragging.offset({
+	                 left: $dragging.offset().left + e.pageX - $dragX,
+	                 top: $dragging.offset().top + e.pageY - $dragY
+	             });
+	             if (speedX.length > 5) {
+	             	speedX.shift();
+	             	speedY.shift();
+	             }
+	            speedX.push(e.pageX - $dragX);
+	            speedY.push(e.pageY - $dragY);
+
+	             $dragX = e.pageX;
+	    	$dragY = e.pageY;
+	    	lastmovetime = +new Date();
+	    });
+
+
+	    $(document).on("mousedown", ".draggable", function (e) {
+
+	    	if ($dragging) return;
+speedX = [];
+speedY = [];
+	    	//console.log(e);
+	    	$dragX = e.pageX;
+	    	$dragY = e.pageY;
+	        $dragging = $(e.currentTarget);
+
+$dragging.stop();
+
+	        e.preventDefault();
+	    });
+
+	    $(document).on("mousedown", ".slide img", function (e) {
+
+	    	if ($dragging) return;
+speedX = [];
+speedY = [];
+	    	//console.log(e);
+	    	$dragX = e.pageX;
+	    	$dragY = e.pageY;
+	        $dragging = $(e.currentTarget);
+
+$dragging.stop();
+
+	        e.preventDefault();
+	    });
+
+	    $(document).on("mouseup", function (e) {
+	    	if (!$dragging) return;
+
+var sumX = 0, sumY = 0;
+var dirX = 0, dirY = 0;
+ for(var i in speedX) {
+ 	var x = speedX[i];
+ 	if (dirX == 1 && x < 0) {
+ 		sumX = 0;
+ 		dirX = -1;
+ 	} else if (dirX == -1 && x > 0) {
+ 		sumX = 0;
+ 			dirX = 1;
+ 		} else if (dirX ==0) {
+ 			if (x > 0) dirX = 1;
+ 			if (x < 0) dirX = -1;
+ 		}
+ 	sumX += x;
+ }
+ 	for(var i in speedY) {
+var y = speedY[i];
+ 	if (dirY == 1 && y < 0) {
+ 		sumY = 0;
+ 		dirY = -1;
+ 	} else if (dirY == -1 && y > 0) {
+ 		sumY = 0;
+ 			dirY = 1;
+ 		} else if (dirY ==0) {
+ 			if (y > 0) dirY = 1;
+ 			if (y < 0) dirY = -1;
+ 		}
+ 		sumY += y;
+}
+
+//console.log(sumX, sumY);
+var duration = (Math.abs(speedX.pop()) + Math.abs(speedY.pop())) * 10 + 100;
+if (duration > 500) duration = 500;
+
+var elapsed = +new Date() - lastmovetime + 1;
+sumX /= elapsed;
+sumY /= elapsed;
+
+var img = $dragging;
+var bounce = img.data('bounce') || 'center';
+
+			$dragging.stop().animate({left: $dragging.position().left + sumX, top: $dragging.position().top + sumY}, duration, 'easeOutCubic', function(evt) {
+checkBoundingImage(img, bounce, true);
+
+			});
+
+//	        console.log(speedX, speedY);
+
+
+	        $dragging = null;
+
+	    });
+})();
+
+</script>
+
+<script src="./js/LZ77.js"></script>
+<script src="./js/Base64.js"></script>
+
+<script>
+(function (selector) {
+	var query = location.search;
+	if (query.slice(0, 1) != '?') return;
+	query = query.slice(1).split('&');
+	
+	var key, params = {};
+	for (var i = 0; i < query.length; i++) {
+		key = query[i].slice(0, query[i].indexOf('='));
+		params[key] = query[i].slice(query[i].indexOf('=') + 1);
+	}
+	
+	var obj = null;
+	try {
+		obj = JSON.parse(new LZ77().decompress(Base64.decode(params.q)));
+	} catch (e) {
+		return;
+	}
+
+	console.log(obj);
+	
+	var gallery = $(selector);
+	
+	for (var i in obj.s) {
+		gallery.append('<div class="slide"><img src="' + obj.s[i] + '" onerror="errorImage(this)"></div>');
+	}
+	
+	var index = parseInt(params.i);
+	app.index = index < 0? 0: index;
+	
+	init();
+	
+	// toggleFullScreen(document.body);
+})('#gallery');
+
+function makeQueryValue(imageUrls) {
+	var obj = {'s': []}; // key is 'q'
+	imageUrls.forEach(function(url) {
+		obj.s.push(url);
+	});
+	return Base64.encode(new LZ77().compress(JSON.stringify(obj)));
+}
+
+function errorImage(element) {
+	var img = $(element);
+
+	//img.hide();
+	img.on('load', function() {
+		if (img.is(':visible')) {
+			resizeImage(img);
+			repositionCenter(img);
+			img.fadeIn();
+	
+			updateButtonSize({'scale': 100, 'option': 'error'});
+		}
+	});
+
+	img.data('option', 'error');
+	img.attr('src', './images/warning.png');
+}
+</script>
+
+<script>
+function test() {
+	var testQueryValue = makeQueryValue([
+		'https://t1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/2Vw/image/AzBNQ6nEO-NimEn9z-2BgrqSwi0.jpg',
+		'https://t1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/2Vw/image/AzBNQ6nEO-NimEn9z-2BgrqSwi0.jpg',
+		'https://t1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/2Vw/image/AzBNQ6nEO-NimEn9z-2BgrqSwi0.jpg',
+		'about:blank',
+		'https://t1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/2Vw/image/AzBNQ6nEO-NimEn9z-2BgrqSwi0.jpg',
+	]);
+	location.href = location.pathname + '?q=' + testQueryValue;
+}
+</script>
+
+</body>
+</html>
