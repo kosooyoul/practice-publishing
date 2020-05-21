@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="ui.ruler.css" rel="stylesheet" type="text/css">
+	<script src="jquery.min.js"></script>
+	<script src="ui.Ruler.js"></script>
+</head>
+<body>
+	<div id="ruler1"></div>
+	
+	<button onclick="view.setScroll(view.getScroll() - 10);">왼쪽으로</button>
+	<button onclick="view.setScroll(view.getScroll() + 10);">오른쪽으로</button>
+	<p id="position">0</p>
+	<script>
+		var view = new UI.Ruler("#ruler1");
+
+		view.setOnSelect(function(time){
+			$("#position").text(time);
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+#timeline-instance-title {
+	padding: 5px 0 5px 0;
+	background-image: none,linear-gradient(to bottom,rgba(255,255,255,1) 0,rgba(255,255,255,0) 100%);
+}
+.timeline-instance-item, .timeline-keyframes-item {
+	border-bottom: #93A0A8 solid 1px;
+}
+#timeline-instance-list .children .item {
+	border-bottom: solid 1px #AEAB9E;
+}
+#timeline-keyframe-title{
+	background-image: none,linear-gradient(to bottom,rgba(255,255,255,1) 0,rgba(255,255,255,0) 100%);
+	position: relative;
+	height: 25px;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}

@@ -1,0 +1,45 @@
+.ui-ruler {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	height: 20px;
+	border: 1px solid white;
+	outline: 1px solid black;
+}
+.ui-ruler .marking-group{
+	position: relative;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+.ui-ruler .marking-group .marking{
+	background-color: #93A0A8;
+	width: 1px;
+	position: absolute;
+	height: 4px;
+	bottom: 0px;
+}
+.ui-ruler .marking-group .marking.normal{
+	height: 8px;
+}
+.ui-ruler .marking-group .marking.big{
+	height: 12px;
+}
+.ui-ruler .valuetext-group{
+}
+.ui-ruler .valuetext-group .valuetext{
+	position: absolute;
+	top: 0px;
+	display: inline-block;
+	width: 100px;
+	margin-left: -50px;
+	text-align: center;
+	font-size: 10px;
+}
+.ui-ruler .selectbar{
+	background-color: red;
+	width: 1px;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+}

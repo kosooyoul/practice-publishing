@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="ui.timeline.css" rel="stylesheet" type="text/css">
+	<script src="jquery.min.js"></script>
+	<script src="ui.timeline.InstanceView.js"></script>
+	<script src="ui.timeline.KeyframeView.js"></script>
+	<script src="ui.timeline.TimelineView.js"></script>
+</head>
+<body>
+	<div id="timelineView"></div>
+	<p id="position">0</p>
+	<script>
+		var sampleDataSource = {
+			hierarchy: [
+			{
+					text: "InstanceName1",
+					customData: {},
+					timeList: [1,12,23,44,75],
+					items: [
+						{
+							text: "InstanceName1-1",
+							customData: {},
+							timeList: [21,32,43,54,65],
+						},
+						{
+							text: "InstanceName1-2",
+							customData: {},
+							timeList: [11,12,13,24,25],
+						},
+					]
+				},
+				{
+					text: "InstanceName2",
+					customData: {},
+					timeList: [21,42,63,84,95],
+					items: [
+
+					]
+				},
+			]
+		};
+
+		var view = new UI.Timeline.TimelineView("#timelineView", sampleDataSource);
+
+		view.setOnSelectTimeChange(function(time){
+			$("#position").text(time);
+		});
+
+	</script>
+</body>
+</html>
