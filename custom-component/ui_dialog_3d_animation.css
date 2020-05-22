@@ -1,0 +1,159 @@
+.uidialog-dialog {
+	position: absolute;
+	background-color: #DDDDDD;
+	cursor: default;
+	box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25);
+	/*브라우저마다 다르게 나옴*/
+	/*border: outset 2px white;*/
+	border-left: solid 2px white;
+	border-top: solid 2px white;
+	border-right: solid 2px gray;
+	border-bottom: solid 2px gray;
+
+	visibility: hidden;
+}
+
+.uidialog-titlebar {
+	position: relative;
+	padding: 5px;
+	color: #FFFFFF;
+	background-color: #0064C8;
+	font-family: 'sans-serif';
+	font-size: 12px;
+}
+
+.uidialog-titlebar:hover {
+	background-color: #0086EA;
+}
+
+.uidialog-titlebar:active {
+	background-color: #0064C8;
+}
+
+.uidialog-contentbox {
+	position: relative;
+	margin: 5px;
+	font-family: 'sans-serif';
+	font-size: 12px;
+	cursor: auto;
+}
+
+.uidialog-okbutton {
+	position: relative;
+	display: inline-block;
+	min-width: 80px;
+	margin: 5px;
+	padding: 5px;
+	background-color: #DDDDDD;
+	font-family: 'sans-serif';
+	font-size: 12px;
+	/*브라우저마다 다르게 나옴*/
+	/*border: outset 2px white;*/
+	border-left: solid 2px white;
+	border-top: solid 2px white;
+	border-right: solid 2px gray;
+	border-bottom: solid 2px gray;
+}
+
+.uidialog-okbutton:hover {
+	background-color: #EEEEEE;
+}
+	
+.uidialog-okbutton:active {
+	/*브라우저마다 다르게 나옴*/
+	/*border: inset 2px white;*/
+	border-left: solid 2px gray;
+	border-top: solid 2px gray;
+	border-right: solid 2px white;
+	border-bottom: solid 2px white;
+}
+
+/* Dialog animation : show */
+.uidialog-show {
+	/* Chrome, Safari, Opera */
+	-webkit-animation-name: showdialog;
+	-webkit-animation-duration: 300ms;
+	-webkit-animation-timing-function: ease-out;
+
+	animation-name: showdialog;
+	animation-duration: 300ms;
+	animation-timing-function: ease-out;
+
+	visibility: visible;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes showdialog {
+    from {
+		opacity: 0;
+		-webkit-transform: scale(0, 0) rotate3d(1, 0, 0, -90deg);
+	}
+    60% {
+		-webkit-transform: scale(1.2, 1.2) rotate3d(1, 0, 0, 90deg);
+	}
+    to {
+		opacity: 1;
+		-webkit-transform: scale(1, 1) rotate3d(1, 0, 0, 0deg);
+	}
+}
+
+/* Standard syntax, IE11, FireFox */
+@keyframes showdialog {
+    from {
+		opacity: 0;
+		transform: scale(0, 0) rotate3d(1, 0, 0, -90deg);
+	}
+    60% {
+		transform: scale(1.2, 1.2) rotate3d(1, 0, 0, 90deg);
+	}
+    to {
+		opacity: 1;
+		transform: scale(1, 1) rotate3d(1, 0, 0, 0deg);
+	}
+}
+
+/* Dialog animation : hide */
+.uidialog-hide {
+	/* Chrome, Safari, Opera */
+	-webkit-animation-name: hidedialog;
+	-webkit-animation-duration: 300ms;
+	-webkit-animation-timing-function: ease-in;
+
+	animation-name: hidedialog;
+	animation-duration: 300ms;
+	animation-timing-function: ease-in;
+
+	visibility: hidden;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes hidedialog {
+    0% {
+		visibility: visible;
+		opacity: 1;
+		-webkit-transform: scale(1, 1) rotate3d(1, 0, 0, 0deg);
+	}
+    40% {
+		-webkit-transform: scale(1.2, 1.2) rotate3d(1, 0, 0, -90deg);
+	}
+    100% {
+		opacity: 0;
+		-webkit-transform: scale(0.2, 0.2) rotate3d(1, 0, 0, 90deg);
+	}
+}
+
+/* Standard syntax, IE11, FireFox */
+@keyframes hidedialog {
+    from {
+		visibility: visible;
+		opacity: 1;
+		transform: scale(1, 1) rotate3d(1, 0, 0, 0deg);
+	}
+    40% {
+		transform: scale(1.2, 1.2) rotate3d(1, 0, 0, -90deg);
+	}
+    to {
+		opacity: 0;
+		transform: scale(0.2, 0.2) rotate3d(1, 0, 0, 90deg);
+	}
+}

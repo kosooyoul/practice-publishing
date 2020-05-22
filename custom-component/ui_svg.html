@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<script>
+
+var Star = function(selector, color){
+	var _element = document.querySelector(selector);
+	var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	var poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+
+	_element.appendChild(svg);
+	svg.appendChild(poly);
+
+	svg.setAttribute("width", 200);
+	svg.setAttribute("height", 200);
+	poly.setAttribute("points", "100,10 40,198 190,78 10,78 160,198");
+	poly.setAttribute("style", "stroke:purple;stroke-width:1;fill-rule:evenodd;");
+	poly.style.fill = color;
+
+	var _onmove, _onup;
+
+	//이벤트 정의 (모바일을 위해서 touch이벤트도 설정)
+	poly.addEventListener("touchstart", onDown);
+	poly.addEventListener("mousedown", onDown);
+	window.addEventListener("touchmove", onMove);
+	window.addEventListener("mousemove", onMove);
+	window.addEventListener("touchend", onUp);
+	window.addEventListener("mouseup", onUp);
+
+	function onDown(e){
+	    e.preventDefault();//for Mobile
+		_element.style.zIndex = ++Star.maxZ;
+
+		var pointer = event.targetTouches? event.targetTouches[0] : event;//for Mobile
+        var x = pointer.pageX;
+        var y = pointer.pageY;
+		var offsetX = parseInt(_element.style.left);
+		var offsetY = parseInt(_element.style.top);
+
+		_onmove = function(e){
+			var pointer = event.targetTouches? event.targetTouches[0] : event;//for Mobile
+			_element.style.left = (offsetX + (pointer.pageX - x)) + "px";
+			_element.style.top = (offsetY + (pointer.pageY - y)) + "px";
+		};
+		_onup = function(e){
+			_onmove = null;
+			_onup = null;
+		};
+	};
+
+	function onMove(e){
+		_onmove && _onmove(e);
+	}
+
+	function onUp(e){
+		_onup && _onup(e);
+	}
+
+	this.setOnClickListener = function(callback){
+		poly.onclick = callback;
+	}
+};
+Star.maxZ = 0;
+
+</script>
+</head>
+<body>
+
+<div id="star1" style="position: absolute; left: 10px; top: 10px"></div>
+<div id="star2" style="position: absolute; left: 70px; top: 50px"></div>
+<div id="star3" style="position: absolute; left: 170px; top: 150px"></div>
+<div id="star4" style="position: absolute; left: 137px; top: 80px"></div>
+<div id="star5" style="position: absolute; left: 240px; top: 90px"></div>
+<div id="star6" style="position: absolute; left: 110px; top: 120px"></div>
+<div id="star7" style="position: absolute; left: 50px; top: 220px"></div>
+
+<script>
+	var star1 = new Star("#star1", "#FF0000");
+	var star2 = new Star("#star2", "#0000FF");
+	var star3 = new Star("#star3", "magenta");
+	var star4 = new Star("#star4", "gold");
+	var star5 = new Star("#star5", "#00FFFF");
+	var star6 = new Star("#star6", "orange");
+	var star7 = new Star("#star7", "green");
+</script>
+
+</body>
+</html>

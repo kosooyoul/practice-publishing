@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="ui_canvas.js"></script>
+</head>
+<body>
+	샘플'5' 입니다
+	<br>
+	<div id="canvas1"></div>
+	<br>
+	<div id="canvas2" data-width="200" data-height="80" data-shape="round" data-shapecount="500"></div>
+	<br>
+	<div id="canvas3" data-view="uicanvas" data-width="240" data-height="100" data-shape="rect" data-shapecount="1000"></div>
+	<script>
+		var canvas1 = document.querySelector("#canvas1");
+		var uicanvas1 = new UICanvas(canvas1);
+		uicanvas1.setSize(160, 60);
+
+		var canvas2 = document.querySelector("#canvas2");
+		var uicanvas2 = new UICanvas(canvas2);
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="ui_dialog_3d_animation.css" rel="stylesheet" type="text/css">
+	<script src="ui_dialog_css_animation.js"></script>
+	<script src="ui_canvas.js"></script>
+</head>
+<body>
+	<div id="dialog1" data-view="uidialog" data-title="샘플'6' 입니다">
+		윗쪽 텍스트<br>
+		<div id="uicanvas1" data-view="uicanvas" data-background="true" data-width="200" data-height="80"></div>
+		아랫쪽 텍스트
+	</div>
+
+	<button id="button">Show</button>
+	<script>
+		var button = document.querySelector("#button");
+		button.addEventListener("click", function(e){
+			dialog1.show(80, 10);
+		});
+	</script>
+
+</body>
+</html>

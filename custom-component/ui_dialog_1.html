@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="ui_dialog.css" rel="stylesheet" type="text/css">
+	<script src="ui_dialog.js"></script>
+</head>
+<body>
+	<div id="dialog1"></div>
+	<script>
+		var dialog1 = document.querySelector("#dialog1");
+		var uidialog1 = new UIDialog(dialog1);
+
+		uidialog1.setTitle("'샘플1' 입니다");
+		uidialog1.setMessage("에러가 발생하였습니다.\n에러위치 : xxxxxxx yyyyyyyy zzzzzzzz");
+
+		uidialog1.setOnOKClickListener(function(){
+			alert("OK");
+		});
+	</script>
+
+	<button id="button">Show</button>
+	<script>
+		var button = document.querySelector("#button");
+		button.addEventListener("click", function(){
+			uidialog1.show(80, 10);
+		});
+	</script>
+
+</body>
+</html>

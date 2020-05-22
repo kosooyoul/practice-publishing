@@ -1,0 +1,302 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html, body {
+	padding: 0px; margin: 0px; width: 100%; height: 100%;
+}
+.tlist {
+	white-space: nowrap;
+	font-size: 0px;
+}
+.titem {
+	width: 160px;
+	height: 30px;
+	outline: 1px solid red;
+	text-align: center;
+	display: inline-block;
+	font-size: 12px;
+	background-color: wheat;
+}
+
+.cwrap {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	top: 60px;
+	bottom: 140px;
+	overflow: auto;
+}
+
+.clist {
+	font-size: 0px;
+	padding: 20px;
+	text-align: center;
+}
+.citem {
+	width: 140px;
+	height: 140px;
+	margin: 10px;
+	outline: 1px solid blue;
+	text-align: center;
+	display: inline-block;
+	font-size: 12px;
+	background-color: silver;
+}
+</style>
+</head>
+<body class="nosel">
+
+<div style="position: absolute; text-align: center; background-color: gold; width: 100%; height: 60px; bottom: 0px; left: 0px;">
+	<div style="display: inline-block; position: relative; width: 300px; height: 60px; background-color: cyan;">
+
+		<div class="bs" style="position: absolute; left: 0px; width: 300px; height: 60px; outline: 1px solid black;"></div>
+
+		<div class="btn" style="position: absolute; left: 120px; width: 60px; height: 60px; outline: 1px solid black;"></div>
+
+	</div>
+</div>
+
+<div class="twrap" style="position: absolute; width: 100%; height: 60px; left: 0px; bottom: 60px; overflow: hidden;">
+	<div class="tpin" style="position: absolute; left: 50%; margin-left: -15px; width: 30px; height: 30px; top: 0px; background-color: yellow;"></div>
+	<div class="tlist" style="position: absolute; left: 0px; bottom: 0px;">
+		<div class="titem" data-date="1980.01" data-desc="1980년도" data-count="6">1980.01</div>
+		<div class="titem" data-date="1981.01" data-desc="1981년도" data-count="1">1981.01</div>
+		<div class="titem" data-date="1982.01" data-desc="1982년도" data-count="2">1982.01</div>
+		<div class="titem" data-date="1983.01" data-desc="1983년도" data-count="3">1983.01</div>
+		<div class="titem" data-date="1984.01" data-desc="1984년도" data-count="4">1984.01</div>
+		<div class="titem" data-date="1985.01" data-desc="1985년도" data-count="5">1985.01</div>
+		<div class="titem" data-date="1986.01" data-desc="1986년도" data-count="6">1986.01</div>
+		<div class="titem" data-date="1987.01" data-desc="1987년도" data-count="7">1987.01</div>
+		<div class="titem" data-date="1988.01" data-desc="1988년도" data-count="8">1988.01</div>
+		<div class="titem" data-date="1989.01" data-desc="1989년도" data-count="9">1989.01</div>
+		<div class="titem" data-date="1990.01" data-desc="1990년도" data-count="6">1990.01</div>
+		<div class="titem" data-date="1991.01" data-desc="1991년도" data-count="1">1991.01</div>
+		<div class="titem" data-date="1992.01" data-desc="1992년도" data-count="2">1992.01</div>
+		<div class="titem" data-date="1993.01" data-desc="1993년도" data-count="3">1993.01</div>
+		<div class="titem" data-date="1994.01" data-desc="1994년도" data-count="4">1994.01</div>
+		<div class="titem" data-date="1995.01" data-desc="1995년도" data-count="5">1995.01</div>
+		<div class="titem" data-date="1996.01" data-desc="1996년도" data-count="6">1996.01</div>
+		<div class="titem" data-date="1997.01" data-desc="1997년도" data-count="7">1997.01</div>
+		<div class="titem" data-date="1998.01" data-desc="1998년도" data-count="8">1998.01</div>
+		<div class="titem" data-date="1999.01" data-desc="1999년도" data-count="9">1999.01</div>
+		<div class="titem" data-date="2000.01" data-desc="2000년도" data-count="40">2000.01</div>
+		<div class="titem" data-date="2001.01" data-desc="2001년도" data-count="1">2001.01</div>
+		<div class="titem" data-date="2002.01" data-desc="2002년도" data-count="2">2002.01</div>
+		<div class="titem" data-date="2003.01" data-desc="2003년도" data-count="3">2003.01</div>
+		<div class="titem" data-date="2004.01" data-desc="2004년도" data-count="4">2004.01</div>
+		<div class="titem" data-date="2005.01" data-desc="2005년도" data-count="5">2005.01</div>
+		<div class="titem" data-date="2006.01" data-desc="2006년도" data-count="6">2006.01</div>
+		<div class="titem" data-date="2007.01" data-desc="2007년도" data-count="7">2007.01</div>
+		<div class="titem" data-date="2008.01" data-desc="2008년도" data-count="8">2008.01</div>
+		<div class="titem" data-date="2009.01" data-desc="2009년도" data-count="9">2009.01</div>
+		<div class="titem" data-date="2010.01" data-desc="2010년도" data-count="5">2010.01</div>
+		<div class="titem" data-date="2011.01" data-desc="2011년도" data-count="1">2011.01</div>
+		<div class="titem" data-date="2012.01" data-desc="2012년도" data-count="2">2012.01</div>
+		<div class="titem" data-date="2013.01" data-desc="2013년도" data-count="3">2013.01</div>
+		<div class="titem" data-date="2014.01" data-desc="2014년도" data-count="4">2014.01</div>
+		<div class="titem" data-date="2015.01" data-desc="2015년도" data-count="5">2015.01</div>
+		<div class="titem" data-date="2016.01" data-desc="2016년도" data-count="6">2016.01</div>
+		<div class="titem" data-date="2017.01" data-desc="2017년도" data-count="7">2017.01</div>
+		<div class="titem" data-date="2018.01" data-desc="2018년도" data-count="8">2018.01</div>
+		<div class="titem" data-date="2019.01" data-desc="2019년도" data-count="9">2019.01</div>
+		<div class="titem" data-date="2020.01" data-desc="2020년도" data-count="4">2020.01</div>
+	</div>
+	<div style="position: absolute; background-color: cyan; left: 10px; right: 10px; height: 8px; top: 5px;">
+		<div class="tpercent" style="position: absolute; left: 0%; margin-left: -4px; width: 8px; height: 4px; top: 1px; border-radius: 8px; background-color: white; border: 1px solid gray;"></div>
+	</div>
+</div>
+
+<div style="text-align: center;">
+	<div class="desc"></div>
+	<div class="locator"></div>
+</div>
+
+<div style="text-align: center;">
+	카테1 카테2 카테3 카테4 카레5 카레6 
+</div>
+
+<div class="cwrap">
+	<div class="clist">
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+		<div class="citem"></div>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+
+var val = 0;
+
+
+var btnmove = false;
+var btnpos = {};
+var btnoldx = 0;
+var btninterval = 0;
+var btndelta = 0;
+$('.nosel').on('drag dragstart select selectstart', function(evt) {
+	evt.preventDefault();
+	return false;
+});
+
+$(window).on('click', function(evt) {
+	if ($(evt.target).is('.titem')) {
+		var index = $('.titem').index(evt.target);
+		moveAtIndex(index, true);
+	}
+});
+
+$(window).on('mousedown touchstart', function(evt) {
+	if ($(evt.target).is('.btn')) {
+		if (evt.type == 'touchstart') {
+			evt.preventDefault();//for Mobile
+		}
+
+		$('.btn').stop();
+
+		var pointer = evt.targetTouches? evt.targetTouches[0] : evt;
+		var pos = {x: pointer.pageX, y: pointer.pageY};
+		var oldx = $('.btn').position().left;
+
+		btnoldx = oldx;
+		btnpos = pos;
+		btnmove = true;
+		btndelta = 0;
+
+	}
+
+}).on('mousemove touchmove', function(evt) {
+	if (btnmove == true) {
+		var pointer = evt.targetTouches? evt.targetTouches[0] : evt;
+		var pos = {x: pointer.pageX, y: pointer.pageY};
+		var delta = (pos.x - btnpos.x);
+
+		var left = btnoldx + delta;
+
+		if (left > 300 - 60) left = 300 - 60;
+		if (left < 0) left = 0;
+
+		btndelta = delta;
+		btnleft = left;
+
+		if (btninterval == 0) {
+			updatePosition();
+
+			btninterval = setInterval(updatePosition, 1000 / 60);
+		}
+	}
+}).on('mouseup touchend', function(evt) {
+	if (btnmove == true) {
+		clearInterval(btninterval);
+		btninterval = 0;
+
+		btnmove = false;
+		btndelta = 0;
+		btnleft = 120;
+
+		moveAtIndex(lastIndex, true);
+		$('.btn').animate({'left': 120}, 400, 'easeOutBounce');
+	}
+
+});
+
+var lastIndex = 0;
+
+function updatePosition() {
+	var tw = $('.tlist').width();
+	var tww = $('.twrap').width();
+	var tval = val - btndelta / (tww / 100); // 50 is K
+
+	if (tval > tww / 2) tval = tww / 2;
+	if (tval < -tw + tww / 2 + 1) tval = -tw + tww / 2 + 1;
+
+	val = tval;
+
+	$('.btn').css({'left': btnleft});
+
+	$('.txt').text(val);
+	$('.tlist').css({'left': val});
+
+	var index = -parseInt((val - tww / 2) / 160);
+	if (lastIndex != index) {
+		lastIndex = index;
+
+		var item = $('.titem').eq(lastIndex);
+		console.log(item.data('date'));
+	}
+
+	// percentage
+	var percent = -(tval - tww / 2) / (tw) * 100;
+	$('.tpercent').css({'left': percent + '%'});
+}
+
+function moveAtIndex(index, animate) {
+	var tw = $('.tlist').width();
+	var tww = $('.twrap').width();
+	var tval = -index * 160 + tww / 2 - 80;
+	var count = $('.titem').length;
+
+	val = tval;
+	lastIndex = Math.min(count - 1, index);
+
+	$('.txt').text(val);
+	var item = $('.titem').eq(index);
+
+	if (animate) {
+		$('.tlist').animate({'left': val}, 200, 'swing', function() {
+			showContent(item);
+
+			// percentage
+			var percent = -(val - tww / 2) / (tw) * 100;
+			$('.tpercent').animate({'left': percent + '%'}, 200, 'swing');
+		});
+	} else {
+		$('.tlist').css({'left': val});
+		showContent(item);
+		
+		// percentage
+		var percent = -(val - tww / 2) / (tw) * 100;
+		$('.tpercent').css({'left': percent + '%'});
+	}
+
+}
+
+function showContent(item) {
+	$('.desc').text(item.data('desc'));
+
+	var count = parseInt(item.data('count')) || 0;
+
+	var html = '';
+	for (var i = 0; i < count; i++) {
+		html += '<div style="display: inline-block; border: 1px solid gray; border-radius: 5px; width: 5px; height: 5px; margin: 2px; background-color: white;"></div>';
+	}
+	$('.locator').html(html);
+
+}
+
+$(window).on('load', function() {
+	moveAtIndex(lastIndex);
+}).on('resize', function(evt) {
+	moveAtIndex(lastIndex);
+});;
+
+</script>
+
+
+</body>
+</html>

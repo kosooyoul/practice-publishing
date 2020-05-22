@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="ui_dialog.css" rel="stylesheet" type="text/css">
+	<script src="ui_dialog.js"></script>
+</head>
+<body>
+	<div id="dialog1" data-view="uidialog" data-title="'샘플3' 입니다">
+		<b>에러</b>가 발생하였습니다.<br>
+		에러위치 : <font color="red">xxxxxxx</font> <i>yyyyyyyy</i> zzzzzzzz
+	</div>
+
+	<button id="button">Show</button>
+	<script>
+		var button = document.querySelector("#button");
+		button.addEventListener("click", function(){
+			dialog1.show(80, 10);
+		});
+	</script>
+
+</body>
+</html>
