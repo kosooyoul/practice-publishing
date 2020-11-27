@@ -57,14 +57,14 @@
 	border: 1px solid rgba(255, 255, 255, 0.8);
 	border-radius: 4px;
 	padding: 4px 8px;
-	box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.4);
+	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
 }
 .hanulse-dialog {
 	position: absolute;
 	left: 0px;
 	top: 0px;
-	width: 100%;
-	height: 100%;
+	width: 1px;
+	height: 1px;
 	z-index: 1;
 	-ms-user-select: none; 
 	-moz-user-select: -moz-none;
@@ -79,7 +79,7 @@
 	top: 0px;
 	width: 600px;
 	height: 500px;
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.2);
 	z-index: -1;
 }
 .hanulse-menu_list {
@@ -89,7 +89,7 @@
 	border: 1px solid rgba(255, 255, 255, 0.8);
 	border-radius: 6px;
 	padding: 8px 4px;
-	box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.4);
+	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
 	z-index: 1;
 }
 .hanulse-menu-item {
@@ -152,7 +152,7 @@
 	background-color: rgba(0, 0, 60, 0.4);
 	border: 1px solid rgba(255, 255, 255, 0.8);
 	border-radius: 4px;
-	box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.4);
+	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
 }
 .hanulse-memo_text {
 	position: relative;
@@ -167,7 +167,7 @@
 	background-color: rgba(0, 0, 60, 0.4);
 	border: 1px solid rgba(255, 255, 255, 0.8);
 	border-radius: 4px;
-	box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.4);
+	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
 }
 .hanulse-input_text {
 	position: relative;

@@ -32,36 +32,36 @@ var $hanulse = new (function hanulse(env) {
 
 	// Private html
 	var SVG_GROUND = [
-		'<svg width="1" height="1" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<path class="hanulse-cell_ground" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17" fill="#999999CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
 		'</svg>'
 	].join('\n')
 	var SVG_WALL_LEFT = [
-		'<svg width="1" height="1" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<path class="hanulse-cell_wall-left" data-tag="shape" d="m 0 17 l 34 -17 l 0 -31 l -34 17 l 0 31" fill="#777777CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
 		'</svg>'
 	].join('\n')
 	var SVG_WALL_RIGHT = [
-		'<svg width="1" height="1" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<path class="hanulse-cell_wall-right" data-tag="shape" d="m 34 0 l 34 17 l 0 -31 l -34 -17 l 0 31" fill="#888888CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
 		'</svg>'
 	].join('\n')
 	var SVG_GROUND_LINKED = [
-		'<svg width="1" height="1" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
 		'		<path class="hanulse-cell_ground" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17" fill="#999999CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
 		'	</a>',
 		'</svg>'
 	].join('\n')
 	var SVG_WALL_LEFT_LINKED = [
-		'<svg width="1" height="1" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
 		'		<path class="hanulse-cell_wall-left" data-tag="shape" d="m 0 17 l 34 -17 l 0 -31 l -34 17 l 0 31" fill="#777777CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
 		'	</a>',
 		'</svg>'
 	].join('\n')
 	var SVG_WALL_RIGHT_LINKED = [
-		'<svg width="1" height="1" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
 		'		<path class="hanulse-cell_wall-right" data-tag="shape" d="m 34 0 l 34 17 l 0 -31 l -34 -17 l 0 31" fill="#888888CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
 		'	</a>',
@@ -96,7 +96,7 @@ var $hanulse = new (function hanulse(env) {
 		fields.menu = getData($e, 'menu');
 		fields.memo = getData($e, 'memo');
 		fields.input = getData($e, 'input');
-		fields.effect = getData($e, 'effect'); // none, default, flash, warp, bubble, shine
+		fields.effect = getData($e, 'effect'); // none, simple, flash, warp, warp-big, bubble, shine
 		fields.x = getNumberData($e, 'x', 0);
 		fields.y = getNumberData($e, 'y', 0);
 		fields.d = getNumberData($e, 'd', 0);
@@ -220,7 +220,7 @@ var $hanulse = new (function hanulse(env) {
 		// Get fields
 		var fields = {};
 		fields.text = getData($e, 'text');
-		fields.status = getData($e, 'status', ['possible', 'working', 'impossible'], 'possible');
+		fields.status = getEnumData($e, 'status', ['ok', 'possible', 'working', 'impossible'], 'possible');
 		fields.link = getData($e, 'link');
 
 		// Set additional
@@ -229,14 +229,15 @@ var $hanulse = new (function hanulse(env) {
 		// Create child elements
 		var $text = $('<div>').addClass('hanulse-menu-item_text').text(crlfToSpace(fields.text));
 		var $status = $('<div>').addClass('hanulse-menu-item_status');
-		if (fields.status == 'possible') $status.text("possible").css('color', '#FFFF00');
+		if (fields.status == 'ok') $status.text("ok").css('color', '#00FF00');
+		else if (fields.status == 'possible') $status.text("possible").css('color', '#FFFF00');
 		else if (fields.status == 'working') $status.text("working").css('color', '#FFC800');
 		else if (fields.status == 'impossible') {
 			$e.attr('href', 'javascript:void(0)');
 			$e.css('color', '#808080');
 			$status.text("impossible").css('color', '#FF0000');
 		}
-		else $status.text("possible").css('color', 'yellow');
+		else $status.text("possible").css('color', '#FFFF00');
 		$e.append($text);
 		$e.append($status);
 	};
@@ -287,13 +288,14 @@ var $hanulse = new (function hanulse(env) {
 		// Get fields
 		var fields = {};
 		fields.text = getData($e, 'text');
+		fields.type = getData($e, 'type', ['text', 'password', 'number', 'date', 'color', 'month', 'week', 'time', 'datetime'], 'text');
 		fields.submit = getData($e, 'submit');
 		fields.callback = getData($e, 'callback');
 
 		// Create child elements
 		var $box = $('<div>').addClass('hanulse-input_box').css('width', 200);
 		var $text = $('<div>').addClass('hanulse-input_text').html(crlfToBr(fields.text));
-		var $input = $('<input type="text">').addClass('hanulse-input_input');
+		var $input = $('<input type="text">').addClass('hanulse-input_input').attr('type', fields.type);
 		var $submit = $('<input type="button">').addClass('hanulse-input_submit').val(fields.submit || '확인');
 		$box.append($text);
 		$box.append($input);
