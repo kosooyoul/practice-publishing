@@ -85,7 +85,7 @@
 .hanulse-menu_list {
 	position: absolute;
 	color: rgba(255, 255, 255, 0.8);
-	background-color: rgba(0, 0, 60, 0.4);
+	background-color: rgba(0, 0, 60, 0.6);
 	border: 1px solid rgba(255, 255, 255, 0.8);
 	border-radius: 6px;
 	padding: 8px 4px;
@@ -98,8 +98,8 @@
 	color: white;
 	border: 1px solid transparent;
 	border-radius: 4px;
-	padding: 4px 8px;
-	margin: 0px 4px;
+	padding: 2px 8px;
+	margin: 2px 4px;
 	overflow: hidden;
 	z-index: 1;
 	pointer-events: auto;
@@ -112,12 +112,12 @@
 .hanulse-menu-item:hover {
 	color: white;
 	background-color: rgba(40, 120, 160, 0.8);
-	box-shadow: 0px 0px 5px 0px rgba(40, 120, 160, 0.8);
+	box-shadow: 0px 0px 4px 0px rgba(40, 120, 160, 0.4);
 }
 .hanulse-menu-item:active {
 	color: white;
 	background-color: rgba(20, 80, 120, 0.8);
-	box-shadow: 0px 0px 5px 0px rgba(20, 60, 80, 0.8);
+	box-shadow: 0px 0px 4px 0px rgba(20, 60, 80, 0.4);
 }
 .hanulse-menu-item>a {
 	color: white;
@@ -149,7 +149,7 @@
 .hanulse-memo_box {
 	position: absolute;
 	color: rgba(255, 255, 255, 0.8);
-	background-color: rgba(0, 0, 60, 0.4);
+	background-color: rgba(0, 0, 60, 0.6);
 	border: 1px solid rgba(255, 255, 255, 0.8);
 	border-radius: 4px;
 	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
@@ -160,11 +160,22 @@
 	line-height: 24px;
 	vertical-align: middle;
 	margin: 8px 12px;
+    word-break: keep-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.hanulse-image_box {
+	position: absolute;
+	color: rgba(255, 255, 255, 0.8);
+	background-color: rgba(0, 0, 60, 0.6);
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	border-radius: 4px;
+	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
 }
 .hanulse-input_box {
 	position: absolute;
 	color: rgba(255, 255, 255, 0.8);
-	background-color: rgba(0, 0, 60, 0.4);
+	background-color: rgba(0, 0, 60, 0.6);
 	border: 1px solid rgba(255, 255, 255, 0.8);
 	border-radius: 4px;
 	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
@@ -178,7 +189,7 @@
 }
 .hanulse-input_input {
 	position: relative;
-	width: 160px;
+	width: 200px;
 	color: black;
 	background-color: white;
 	font-size: 13px;
@@ -191,7 +202,7 @@
 }
 .hanulse-input_submit {
 	position: relative;
-	width: 176px;
+	width: 216px;
 	height: 28px;
 	color: white;
 	background-color: #006699;

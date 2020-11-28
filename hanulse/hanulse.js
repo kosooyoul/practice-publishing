@@ -29,38 +29,33 @@ var $hanulse = new (function hanulse(env) {
 		var data = getData($e, name);
 		return arr.includes(data)? data: defaultValue;
 	};
+	var loadScript = function (url) {
+		return $.ajax({
+			'url': url,
+			'dataType': 'script',
+			'async': false
+		});
+	};
+	var preventDefault = function ($evt) {
+		$evt.preventDefault();
+	};
 
 	// Private html
 	var SVG_GROUND = [
-		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
-		'	<path class="hanulse-cell_ground" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17" fill="#999999CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
-		'</svg>'
-	].join('\n')
-	var SVG_WALL_LEFT = [
-		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
-		'	<path class="hanulse-cell_wall-left" data-tag="shape" d="m 0 17 l 34 -17 l 0 -31 l -34 17 l 0 31" fill="#777777CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
-		'</svg>'
-	].join('\n')
-	var SVG_WALL_RIGHT = [
-		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
-		'	<path class="hanulse-cell_wall-right" data-tag="shape" d="m 34 0 l 34 17 l 0 -31 l -34 -17 l 0 31" fill="#888888CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
-		'</svg>'
-	].join('\n')
-	var SVG_GROUND_LINKED = [
 		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
 		'		<path class="hanulse-cell_ground" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17" fill="#999999CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
 		'	</a>',
 		'</svg>'
 	].join('\n')
-	var SVG_WALL_LEFT_LINKED = [
+	var SVG_WALL_LEFT = [
 		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
 		'		<path class="hanulse-cell_wall-left" data-tag="shape" d="m 0 17 l 34 -17 l 0 -31 l -34 17 l 0 31" fill="#777777CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
 		'	</a>',
 		'</svg>'
 	].join('\n')
-	var SVG_WALL_RIGHT_LINKED = [
+	var SVG_WALL_RIGHT = [
 		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
 		'		<path class="hanulse-cell_wall-right" data-tag="shape" d="m 34 0 l 34 17 l 0 -31 l -34 -17 l 0 31" fill="#888888CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
@@ -95,6 +90,7 @@ var $hanulse = new (function hanulse(env) {
 		fields.link = getData($e, 'link');
 		fields.menu = getData($e, 'menu');
 		fields.memo = getData($e, 'memo');
+		fields.image = getData($e, 'image');
 		fields.input = getData($e, 'input');
 		fields.effect = getData($e, 'effect'); // none, simple, flash, warp, warp-big, bubble, shine
 		fields.x = getNumberData($e, 'x', 0);
@@ -111,17 +107,14 @@ var $hanulse = new (function hanulse(env) {
 
 		// Create child elements
 		var $shape = null;
+		if (fields.type == 'ground') $shape = $(SVG_GROUND);
+		else if (fields.type == 'wall-left') $shape = $(SVG_WALL_LEFT);
+		else if (fields.type == 'wall-right') $shape = $(SVG_WALL_RIGHT);
+		else $shape = $(SVG_GROUND);
 		if (fields.link) {
-			if (fields.type == 'ground') $shape = $(SVG_GROUND_LINKED);
-			else if (fields.type == 'wall-left') $shape = $(SVG_WALL_LEFT_LINKED);
-			else if (fields.type == 'wall-right') $shape = $(SVG_WALL_RIGHT_LINKED);
-			else $shape = $(SVG_LINKED_GROUND);
-			$shape.find('[data-tag="link"]').attr({'href': fields.link, 'alt': crlfToSpace(fields.text)});
+			$shape.find('[data-tag="link"]').attr({'href': fields.link, 'alt': crlfToSpace(fields.text)}).on("dragstart", preventDefault);
 		} else {
-			if (fields.type == 'ground') $shape = $(SVG_GROUND);
-			else if (fields.type == 'wall-left') $shape = $(SVG_WALL_LEFT);
-			else if (fields.type == 'wall-right') $shape = $(SVG_WALL_RIGHT);
-			else $shape = $(SVG_GROUND);
+			$shape.find('[data-tag="link"]').attr({'href': 'javascript:void(0)', 'alt': crlfToSpace(fields.text)}).on("dragstart", preventDefault);
 		}
 		$e.append($shape)
 		if (fields.text) {
@@ -131,10 +124,17 @@ var $hanulse = new (function hanulse(env) {
 			$e.append($textWrap)
 		}
 
+		// Set shape style
+		if (fields.menu) $shape.css('cursor', 'pointer');
+		if (fields.memo) $shape.css('cursor', 'pointer');
+		if (fields.image) $shape.css('cursor', 'pointer');
+		if (fields.input) $shape.css('cursor', 'pointer');
+
 		// Initialize events
-		$shape.find('[data-tag="shape"]').on('click', function() {
+		$shape.find('[data-tag="link"]').on('click', function() {
 			hanulse.dialog.show(fields.menu, left + DEFAULT_VIEW_CENTER_X, top + DEFAULT_VIEW_CENTER_Y);
 			hanulse.dialog.show(fields.memo, left + DEFAULT_VIEW_CENTER_X, top + DEFAULT_VIEW_CENTER_Y);
+			hanulse.dialog.show(fields.image, left + DEFAULT_VIEW_CENTER_X, top + DEFAULT_VIEW_CENTER_Y);
 			hanulse.dialog.show(fields.input, left + DEFAULT_VIEW_CENTER_X, top + DEFAULT_VIEW_CENTER_Y);
 		});
 	};
@@ -224,7 +224,7 @@ var $hanulse = new (function hanulse(env) {
 		fields.link = getData($e, 'link');
 
 		// Set additional
-		$e.attr({'href': fields.link, 'alt': crlfToSpace(fields.text)});
+		$e.attr({'href': fields.link, 'alt': crlfToSpace(fields.text)}).on("dragstart", preventDefault);
 
 		// Create child elements
 		var $text = $('<div>').addClass('hanulse-menu-item_text').text(crlfToSpace(fields.text));
@@ -257,7 +257,7 @@ var $hanulse = new (function hanulse(env) {
 		fields.text = getData($e, 'text');
 
 		// Create child elements
-		var $box = $('<div>').addClass('hanulse-memo_box').css('width', 200);
+		var $box = $('<div>').addClass('hanulse-memo_box').css('width', 240);
 		var $text = $('<div>').addClass('hanulse-memo_text').html(crlfToBr(fields.text));
 		$box.append($text);
 		$e.append($box);
@@ -270,7 +270,44 @@ var $hanulse = new (function hanulse(env) {
 		// Instance functions
 		var parentShow = this.show;
 		this.show = function(left, top) {
-			$box.css({'left': left - 100, 'top': top});
+			$box.css({'left': left - 120, 'top': top});
+			parentShow.call(_this);
+		};
+	};
+
+	// Define class image
+	hanulse.image = function($e) {
+		var _this = this;
+
+		// Inherit from class dialog
+		hanulse.dialog.call(this, $e);
+
+		// Set default
+		$e.addClass('hanulse-image');
+
+		// Get fields
+		var fields = {};
+		fields.src = getData($e, 'src');
+
+		// Create child elements
+		var $box = $('<div>').addClass('hanulse-image_box').css({
+			'width': 400, 'height': 300,
+			'background-image': 'url("' + fields.src + '")',
+			'background-repeat': 'no-repeat',
+			'background-position': '50%',
+			'background-size': 'contain'
+		});
+		$e.append($box);
+
+		// Initialize events
+		$box.on('click', function() {
+			_this.hide();
+		});
+
+		// Instance functions
+		var parentShow = this.show;
+		this.show = function(left, top) {
+			$box.css({'left': DEFAULT_VIEW_CENTER_X - 200, 'top': DEFAULT_VIEW_CENTER_Y - 150});
 			parentShow.call(_this);
 		};
 	};
@@ -293,7 +330,7 @@ var $hanulse = new (function hanulse(env) {
 		fields.callback = getData($e, 'callback');
 
 		// Create child elements
-		var $box = $('<div>').addClass('hanulse-input_box').css('width', 200);
+		var $box = $('<div>').addClass('hanulse-input_box').css('width', 240);
 		var $text = $('<div>').addClass('hanulse-input_text').html(crlfToBr(fields.text));
 		var $input = $('<input type="text">').addClass('hanulse-input_input').attr('type', fields.type);
 		var $submit = $('<input type="button">').addClass('hanulse-input_submit').val(fields.submit || '확인');
@@ -329,12 +366,22 @@ var $hanulse = new (function hanulse(env) {
 		var parentShow = this.show;
 		this.show = function(left, top) {
 			$input.val(null);
-			$box.css({'left': left - 100, 'top': top});
+			$box.css({'left': left - 120, 'top': top});
 
 			parentShow.call(_this);
 
 			$input.focus();
 		};
+	};
+
+	hanulse.utils = {
+		'hash': function(text) {
+			if (window.$md5) return $md5(text);
+
+			loadScript("http://www.ahyane.net/hanulse/libs/md5.js");
+
+			return window.$md5(text);
+		}
 	};
 })();
 
@@ -357,6 +404,10 @@ $(document).ready(function() {
 
 	$('[data-class="hanulse.memo"]').each(function(index, element) {
 		new $hanulse.memo($(element));
+	})
+
+	$('[data-class="hanulse.image"]').each(function(index, element) {
+		new $hanulse.image($(element));
 	})
 
 	$('[data-class="hanulse.input"]').each(function(index, element) {
