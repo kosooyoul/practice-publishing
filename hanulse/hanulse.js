@@ -29,36 +29,205 @@ var $hanulse = new (function hanulse(env) {
 		var data = getData($e, name);
 		return arr.includes(data)? data: defaultValue;
 	};
-	var loadScript = function (url) {
+	var loadScript = function(url) {
 		return $.ajax({
 			'url': url,
 			'dataType': 'script',
 			'async': false
 		});
 	};
-	var preventDefault = function ($evt) {
+	var preventDefault = function($evt) {
 		$evt.preventDefault();
+	};
+	var getRandom = function(max) {
+		return Math.random() * max;
+	};
+	var getRandomRGBA = function(fixed) {
+		return getRGBA(
+			(fixed.r != null)? fixed.r: getRandom(255),
+			(fixed.g != null)? fixed.g: getRandom(255),
+			(fixed.b != null)? fixed.b: getRandom(255),
+			(fixed.a != null)? fixed.a: getRandom(1.0)
+		);
+	};
+	var getRGBA = function(r, g, b, a) {
+		return 'rgba(' + parseInt(r) + ', ' + parseInt(g) + ', ' + parseInt(b) + ', ' + a + ')';
 	};
 
 	// Private html
+	var SVG_EFFECT_FLOAT = [
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'	<path class="hanulse-effect-float_ground hanulse_i1" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17"/>',
+		'	<path class="hanulse-effect-float_ground hanulse_i2" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17"/>',
+		'	<path class="hanulse-effect-float_ground hanulse_i3" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17"/>',
+		'</svg>'
+	].join('\n');
+	var SVG_EFFECT_BOX = [
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'	<defs>',
+		'		<linearGradient id="hanulse-effect-box_gradient-center" x1="0%" y1="0%" x2="-10%" y2="100%">',
+		'			<stop offset="0%" style="stop-color: rgba(255, 255, 255, 0.0); stop-opacity: 1.0;"/>',
+		'			<stop offset="100%" style="stop-color: rgba(255, 255, 255, 1.0); stop-opacity: 1.0;"/>',
+		'		</linearGradient>',
+		'	</defs>',
+		'	<path class="hanulse-effect-box_center hanulse_i1" data-tag="shape" d="m 34 0 l 34 17 l 0 -31 l -34 -17 l 0 31"/>',
+		'	<path class="hanulse-effect-box_center hanulse_i2" data-tag="shape" d="m 0 17 l 34 -17 l 0 -31 l -34 17 l 0 31"/>',
+		'	<path class="hanulse-effect-box_center hanulse_i3" data-tag="shape" d="m 34 34 l 34 -17 l 0 -31 l -34 17 l 0 31"/>',
+		'	<path class="hanulse-effect-box_center hanulse_i4" data-tag="shape" d="m 0 17 l 34 17 l 0 -31 l -34 -17 l 0 31"/>',
+		'	<path class="hanulse-effect-box_center hanulse_i5" data-tag="shape" d="m 34 -31 l 34 17 l -34 17 l -34 -17 l 34 -17"/>',
+		'</svg>'
+	].join('\n');
+	var SVG_EFFECT_FLASH = [
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'	<path class="hanulse-effect-flash_ground" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17"/>',
+		'</svg>'
+	].join('\n');
+	var SVG_EFFECT_CIRCLE = [
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'	<path class="hanulse-effect-circle_ground-white hanulse_i1" data-tag="shape" d="m 30 -2 l 8 4 l 0 -3 l -8 -4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_ground-white hanulse_i2" data-tag="shape" d="m -4 19 l 8 -4 l 0 -3 l -8 4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_ground-white hanulse_i3" data-tag="shape" d="m 66 18 l 8 -4 l 0 -3 l -8 4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_ground-white hanulse_i4" data-tag="shape" d="m 32 33 l 8 4 l 0 -3 l -8 -4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_ground-red hanulse_i1" data-tag="shape" d="m 30 -2 l 8 4 l 0 -3 l -8 -4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_ground-red hanulse_i2" data-tag="shape" d="m -4 19 l 8 -4 l 0 -3 l -8 4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_ground-red hanulse_i3" data-tag="shape" d="m 66 18 l 8 -4 l 0 -3 l -8 4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_ground-red hanulse_i4" data-tag="shape" d="m 32 33 l 8 4 l 0 -3 l -8 -4 l 0 3"/>',
+		'</svg>'
+	].join('\n');
+	var SVG_EFFECT_CIRCLE_WALL_RIGHT = [
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'	<path class="hanulse-effect-circle_wall-right-white hanulse_i1" data-tag="shape" d="m 30 -30 l 8 4 l 0 -3 l -8 -4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_wall-right-white hanulse_i2" data-tag="shape" d="m 65 -12 l 3 1.5 l 0 -8 l -3 -1.5 l 0 8"/>',
+		'	<path class="hanulse-effect-circle_wall-right-white hanulse_i3" data-tag="shape" d="m 64 15 l 8 4 l 0 -3 l -8 -4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_wall-right-white hanulse_i4" data-tag="shape" d="m 34 4 l 3 1.5 l 0 -8 l -3 -1.5 l 0 8"/>',
+		'	<path class="hanulse-effect-circle_wall-right-red hanulse_i1" data-tag="shape" d="m 30 -30 l 8 4 l 0 -3 l -8 -4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_wall-right-red hanulse_i2" data-tag="shape" d="m 65 -12 l 3 1.5 l 0 -8 l -3 -1.5 l 0 8"/>',
+		'	<path class="hanulse-effect-circle_wall-right-red hanulse_i3" data-tag="shape" d="m 64 15 l 8 4 l 0 -3 l -8 -4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_wall-right-red hanulse_i4" data-tag="shape" d="m 34 4 l 3 1.5 l 0 -8 l -3 -1.5 l 0 8"/>',
+		'</svg>'
+	].join('\n');
+	var SVG_EFFECT_CIRCLE_WALL_LEFT = [
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'	<path class="hanulse-effect-circle_wall-left-white hanulse_i1" data-tag="shape" d="m -4 -9 l 8 -4 l 0 -3 l -8 4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_wall-left-white hanulse_i2" data-tag="shape" d="m 31 -25 l 3 -1.5 l 0 -8 l -3 1.5 l 0 8"/>',
+		'	<path class="hanulse-effect-circle_wall-left-white hanulse_i3" data-tag="shape" d="m 30 2 l 8 -4 l 0 -3 l -8 4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_wall-left-white hanulse_i4" data-tag="shape" d="m 0 20 l 3 -1.5 l 0 -8 l -3 1.5 l 0 8"/>',
+		'	<path class="hanulse-effect-circle_wall-left-red hanulse_i1" data-tag="shape" d="m -4 -9 l 8 -4 l 0 -3 l -8 4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_wall-left-red hanulse_i2" data-tag="shape" d="m 31 -25 l 3 -1.5 l 0 -8 l -3 1.5 l 0 8"/>',
+		'	<path class="hanulse-effect-circle_wall-left-red hanulse_i3" data-tag="shape" d="m 30 2 l 8 -4 l 0 -3 l -8 4 l 0 3"/>',
+		'	<path class="hanulse-effect-circle_wall-left-red hanulse_i4" data-tag="shape" d="m 0 20 l 3 -1.5 l 0 -8 l -3 1.5 l 0 8"/>',
+		'</svg>'
+	].join('\n');
+	var SVG_EFFECT_WARP = [
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'	<defs>',
+		'		<linearGradient id="hanulse-effect-warp_gradient-center" x1="0%" y1="0%" x2="-10%" y2="100%">',
+		'			<stop offset="0%" style="stop-color: rgba(255, 255, 255, 0.0); stop-opacity: 1.0;"/>',
+		'			<stop offset="100%" style="stop-color: rgba(255, 255, 255, 1.0); stop-opacity: 1.0;"/>',
+		'		</linearGradient>',
+		'	</defs>',
+		'	<path class="hanulse-effect-warp_large-band" data-tag="shape" d="m 34 -12 l 50 25 l 0 -40 l -50 -25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp_large-band" data-tag="shape" d="m -16 13 l 50 -25 l 0 -40 l -50 25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp_small-band hanulse_i2" data-tag="shape" d="m 34 -8 l 42 21 l 0 -10 l -42 -21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp_small-band hanulse_i2" data-tag="shape" d="m -8 13 l 42 -21 l 0 -10 l -42 21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp_small-band hanulse_i1" data-tag="shape" d="m 34 -8 l 42 21 l 0 -10 l -42 -21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp_small-band hanulse_i1" data-tag="shape" d="m -8 13 l 42 -21 l 0 -10 l -42 21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp_center" data-tag="shape" d="m 34 0 l 34 17 l 0 -100 l -34 -17 l 0 100"/>',
+		'	<path class="hanulse-effect-warp_center" data-tag="shape" d="m 0 17 l 34 -17 l 0 -100 l -34 17 l 0 100"/>',
+		'	<path class="hanulse-effect-warp_center" data-tag="shape" d="m 34 34 l 34 -17 l 0 -100 l -34 17 l 0 100"/>',
+		'	<path class="hanulse-effect-warp_center" data-tag="shape" d="m 0 17 l 34 17 l 0 -100 l -34 -17 l 0 100"/>',
+		'	<path class="hanulse-effect-warp_small-band hanulse_i1" data-tag="shape" d="m 34 34 l 42 -21 l 0 -10 l -42 21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp_small-band hanulse_i1" data-tag="shape" d="m -8 13 l 42 21 l 0 -10 l -42 -21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp_small-band hanulse_i2" data-tag="shape" d="m 34 34 l 42 -21 l 0 -10 l -42 21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp_small-band hanulse_i2" data-tag="shape" d="m -8 13 l 42 21 l 0 -10 l -42 -21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp_large-band" data-tag="shape" d="m 34 38 l 50 -25 l 0 -40 l -50 25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp_large-band" data-tag="shape" d="m -16 13 l 50 25 l 0 -40 l -50 -25 l 0 40"/>',
+		'</svg>'
+	].join('\n');
+	var SVG_EFFECT_WARP_BIG = [
+		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
+		'	<defs>',
+		'		<linearGradient id="hanulse-effect-warp-big_gradient-center-white" x1="0%" y1="0%" x2="-10%" y2="100%">',
+		'			<stop offset="0%" style="stop-color: rgba(255, 255, 255, 0.0); stop-opacity: 1.0;"/>',
+		'			<stop offset="50%" style="stop-color: rgba(200, 150, 150, 0.5); stop-opacity: 1.0;"/>',
+		'			<stop offset="100%" style="stop-color: rgba(255, 255, 255, 1.0); stop-opacity: 1.0;"/>',
+		'		</linearGradient>',
+		'		<linearGradient id="hanulse-effect-warp-big_gradient-center-red" x1="0%" y1="0%" x2="-10%" y2="100%">',
+		'			<stop offset="0%" style="stop-color: rgba(50, 80, 50, 0.0); stop-opacity: 1.0;"/>',
+		'			<stop offset="50%" style="stop-color: rgba(240, 100, 100, 0.5); stop-opacity: 1.0;"/>',
+		'			<stop offset="100%" style="stop-color: rgba(80, 120, 80, 1.0); stop-opacity: 1.0;"/>',
+		'		</linearGradient>',
+		'		<linearGradient id="hanulse-effect-warp-big_gradient-center-blue" x1="0%" y1="0%" x2="-10%" y2="100%">',
+		'			<stop offset="0%" style="stop-color: rgba(200, 100, 255, 0.0); stop-opacity: 1.0;"/>',
+		'			<stop offset="50%" style="stop-color: rgba(100, 180, 200, 0.5); stop-opacity: 1.0;"/>',
+		'			<stop offset="100%" style="stop-color: rgba(100, 100, 80, 1.0); stop-opacity: 1.0;"/>',
+		'		</linearGradient>',
+		'		<linearGradient id="hanulse-effect-warp-big_gradient-center-yellow" x1="0%" y1="0%" x2="-10%" y2="100%">',
+		'			<stop offset="0%" style="stop-color: rgba(120, 255, 255, 0.0); stop-opacity: 1.0;"/>',
+		'			<stop offset="50%" style="stop-color: rgba(180, 180, 100, 0.5); stop-opacity: 1.0;"/>',
+		'			<stop offset="100%" style="stop-color: rgba(80, 100, 120, 1.0); stop-opacity: 1.0;"/>',
+		'		</linearGradient>',
+		'	</defs>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i3" data-tag="shape" d="m 34 -20 l 66 33 l 0 -40 l -66 -33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i3" data-tag="shape" d="m -32 13 l 66 -33 l 0 -40 l -66 33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i2" data-tag="shape" d="m 34 -20 l 66 33 l 0 -40 l -66 -33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i2" data-tag="shape" d="m -32 13 l 66 -33 l 0 -40 l -66 33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i1" data-tag="shape" d="m 34 -20 l 66 33 l 0 -40 l -66 -33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i1" data-tag="shape" d="m -32 13 l 66 -33 l 0 -40 l -66 33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_large-band hanulse_i2" data-tag="shape" d="m 34 -12 l 50 25 l 0 -40 l -50 -25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_large-band hanulse_i2" data-tag="shape" d="m -16 13 l 50 -25 l 0 -40 l -50 25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_large-band hanulse_i1" data-tag="shape" d="m 34 -12 l 50 25 l 0 -40 l -50 -25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_large-band hanulse_i1" data-tag="shape" d="m -16 13 l 50 -25 l 0 -40 l -50 25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_small-band hanulse_i2" data-tag="shape" d="m 34 -8 l 42 21 l 0 -10 l -42 -21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp-big_small-band hanulse_i2" data-tag="shape" d="m -8 13 l 42 -21 l 0 -10 l -42 21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp-big_small-band hanulse_i1" data-tag="shape" d="m 34 -8 l 42 21 l 0 -10 l -42 -21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp-big_small-band hanulse_i1" data-tag="shape" d="m -8 13 l 42 -21 l 0 -10 l -42 21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp-big_center" data-tag="shape" d="m 34 0 l 34 17 l 0 -100 l -34 -17 l 0 100"/>',
+		'	<path class="hanulse-effect-warp-big_center" data-tag="shape" d="m 0 17 l 34 -17 l 0 -100 l -34 17 l 0 100"/>',
+		'	<path class="hanulse-effect-warp-big_center" data-tag="shape" d="m 34 34 l 34 -17 l 0 -100 l -34 17 l 0 100"/>',
+		'	<path class="hanulse-effect-warp-big_center" data-tag="shape" d="m 0 17 l 34 17 l 0 -100 l -34 -17 l 0 100"/>',
+		'	<path class="hanulse-effect-warp-big_small-band hanulse_i1" data-tag="shape" d="m 34 34 l 42 -21 l 0 -10 l -42 21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp-big_small-band hanulse_i1" data-tag="shape" d="m -8 13 l 42 21 l 0 -10 l -42 -21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp-big_small-band hanulse_i2" data-tag="shape" d="m 34 34 l 42 -21 l 0 -10 l -42 21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp-big_small-band hanulse_i2" data-tag="shape" d="m -8 13 l 42 21 l 0 -10 l -42 -21 l 0 10"/>',
+		'	<path class="hanulse-effect-warp-big_large-band hanulse_i1" data-tag="shape" d="m 34 38 l 50 -25 l 0 -40 l -50 25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_large-band hanulse_i1" data-tag="shape" d="m -16 13 l 50 25 l 0 -40 l -50 -25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_large-band hanulse_i2" data-tag="shape" d="m 34 38 l 50 -25 l 0 -40 l -50 25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_large-band hanulse_i2" data-tag="shape" d="m -16 13 l 50 25 l 0 -40 l -50 -25 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i1" data-tag="shape" d="m 34 46 l 66 -33 l 0 -40 l -66 33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i1" data-tag="shape" d="m -32 13 l 66 33 l 0 -40 l -66 -33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i2" data-tag="shape" d="m 34 46 l 66 -33 l 0 -40 l -66 33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i2" data-tag="shape" d="m -32 13 l 66 33 l 0 -40 l -66 -33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i3" data-tag="shape" d="m 34 46 l 66 -33 l 0 -40 l -66 33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_xlarge-band hanulse_i3" data-tag="shape" d="m -32 13 l 66 33 l 0 -40 l -66 -33 l 0 40"/>',
+		'	<path class="hanulse-effect-warp-big_stick hanulse_i1" data-tag="shape" d="m 25 20 l 2 0 l 0 30 l -2 -0 l 0 -30"/>',
+		'	<path class="hanulse-effect-warp-big_stick hanulse_i2" data-tag="shape" d="m 60 -10 l 2 0 l 0 30 l -2 -0 l 0 -30"/>',
+		'	<path class="hanulse-effect-warp-big_stick hanulse_i3" data-tag="shape" d="m -10 10 l 2 0 l 0 20 l -2 -0 l 0 -20"/>',
+		'	<path class="hanulse-effect-warp-big_stick hanulse_i4" data-tag="shape" d="m 80 0 l 2 0 l 0 20 l -2 -0 l 0 -20"/>',
+		'	<path class="hanulse-effect-warp-big_stick hanulse_i5" data-tag="shape" d="m 20 5 l 2 0 l 0 10 l -2 -0 l 0 -10"/>',
+		'	<path class="hanulse-effect-warp-big_stick hanulse_i6" data-tag="shape" d="m 55 15 l 2 0 l 0 10 l -2 -0 l 0 -10"/>',
+		'	<path class="hanulse-effect-warp-big_stick hanulse_i7" data-tag="shape" d="m -20 -15 l 2 0 l 0 5 l -2 -0 l 0 -5"/>',
+		'	<path class="hanulse-effect-warp-big_stick hanulse_i8" data-tag="shape" d="m 90 -10 l 2 0 l 0 5 l -2 -0 l 0 -5"/>',
+		'</svg>'
+	].join('\n');
 	var SVG_GROUND = [
 		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
-		'		<path class="hanulse-cell_ground" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17" fill="#999999CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
+		'		<path class="hanulse-cell_ground" data-tag="shape" d="m 34 0 l 34 17 l -34 17 l -34 -17 l 34 -17"/>',
 		'	</a>',
 		'</svg>'
 	].join('\n')
 	var SVG_WALL_LEFT = [
 		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
-		'		<path class="hanulse-cell_wall-left" data-tag="shape" d="m 0 17 l 34 -17 l 0 -31 l -34 17 l 0 31" fill="#777777CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
+		'		<path class="hanulse-cell_wall-left" data-tag="shape" d="m 0 17 l 34 -17 l 0 -31 l -34 17 l 0 31"/>',
 		'	</a>',
 		'</svg>'
 	].join('\n')
 	var SVG_WALL_RIGHT = [
 		'<svg viewbox="0 0 68 34" style="position: absolute; overflow: visible; pointer-events: none;">',
 		'	<a data-tag="link" href="" style="pointer-events: auto;">',
-		'		<path class="hanulse-cell_wall-right" data-tag="shape" d="m 34 0 l 34 17 l 0 -31 l -34 -17 l 0 31" fill="#888888CC" stroke="rgb(82, 76, 18)" stroke-width="0.5" fill-rule="evenodd" style="pointer-events: auto;"/>',
+		'		<path class="hanulse-cell_wall-right" data-tag="shape" d="m 34 0 l 34 17 l 0 -31 l -34 -17 l 0 31"/>',
 		'	</a>',
 		'</svg>'
 	].join('\n')
@@ -92,7 +261,9 @@ var $hanulse = new (function hanulse(env) {
 		fields.memo = getData($e, 'memo');
 		fields.image = getData($e, 'image');
 		fields.input = getData($e, 'input');
-		fields.effect = getData($e, 'effect'); // none, simple, flash, warp, warp-big, bubble, shine
+		fields.border = getData($e, 'border');
+		fields.event = getData($e, 'event');
+		fields.effect = getData($e, 'effect'); // none, simple, box, flash(todo), warp, warp-big(todo), fly(todo), bubble(todo), shine(todo)
 		fields.x = getNumberData($e, 'x', 0);
 		fields.y = getNumberData($e, 'y', 0);
 		fields.d = getNumberData($e, 'd', 0);
@@ -118,11 +289,48 @@ var $hanulse = new (function hanulse(env) {
 		}
 		$e.append($shape)
 		if (fields.text) {
-			var $textWrap = $('<div>').addClass('hanulse-cell_text-wrap').css({'left': CELL_WIDTH_HALF - 120 / 2, 'top': -CELL_DEPTH - 12})
+			var $textWrap = $('<div>').addClass('hanulse-cell_text-wrap').css({'left': CELL_WIDTH_HALF - 120 / 2, 'top': -CELL_DEPTH - 12, 'z-index': 1})
 			var $text = $('<span>').addClass('hanulse-cell_text').text(crlfToSpace(fields.text))
 			$textWrap.append($text)
 			$e.append($textWrap)
 		}
+
+		if (fields.border == 'none') {
+			$shape.find('[data-tag="shape"]').css('stroke', 'none');
+		}
+
+		if (fields.event == 'none') {
+			$shape.find('[data-tag="link"]').css('pointer-events', 'none');
+			$shape.find('[data-tag="shape"]').css('pointer-events', 'none');
+		}
+
+		var $effect = null;
+		if (fields.effect == 'simple') {
+			if (fields.type == 'ground') $effect = $(SVG_EFFECT_CIRCLE);
+			else if (fields.type == 'wall-left') $effect = $(SVG_EFFECT_CIRCLE_WALL_LEFT);
+			else if (fields.type == 'wall-right') $effect = $(SVG_EFFECT_CIRCLE_WALL_RIGHT);
+			else $effect = $(SVG_EFFECT_CIRCLE);
+		}
+		else if (fields.effect == 'float') $effect = $(SVG_EFFECT_FLOAT);
+		else if (fields.effect == 'box') $effect = $(SVG_EFFECT_BOX);
+		else if (fields.effect == 'flash') {
+			$effect = $(SVG_EFFECT_FLASH).hide();
+			var refresh = function(waitTime) {
+				$effect.hide();
+				setTimeout(function() {
+					$effect.find('[data-tag="shape"]').css('fill', getRandomRGBA({'a': 0.4}));
+					$effect.show();
+					setTimeout(function() {
+						refresh();
+					}, getRandom(10000));
+				}, waitTime || 100);
+			};
+			refresh(getRandom(10000));
+		}
+		else if (fields.effect == 'circle') $effect = $(SVG_EFFECT_CIRCLE);
+		else if (fields.effect == 'warp') $effect = $(SVG_EFFECT_WARP);
+		else if (fields.effect == 'warp-big') $effect = $(SVG_EFFECT_WARP_BIG);
+		if ($effect) $e.append($effect);
 
 		// Set shape style
 		if (fields.menu) $shape.css('cursor', 'pointer');
@@ -170,11 +378,13 @@ var $hanulse = new (function hanulse(env) {
 
 		// Instance functions
 		this.show = function() {
-			$e.css('display', 'block');
+			// $e.css('display', 'block');
+			$e.fadeIn(200)
 		};
 
 		this.hide = function() {
-			$e.css('display', 'none');
+			// $e.css('display', 'none');
+			$e.fadeOut(200)
 		};
 	};
 
@@ -381,36 +591,90 @@ var $hanulse = new (function hanulse(env) {
 			loadScript("http://www.ahyane.net/hanulse/libs/md5.js");
 
 			return window.$md5(text);
+		},
+		'hueToRgb': function(p, q, t) {
+			if(t < 0) t += 1;
+			if(t > 1) t -= 1;
+			if(t < 1 / 6) return p + (q - p) * 6 * t;
+			if(t < 1 / 2) return q;
+			if(t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+			return p;
+		},
+		'hslToRgb': function(h, s, l) {
+			var r, g, b;
+
+			if (s == 0) {
+				r = g = b = l; // achromatic
+			} else {
+				var q = l < 0.5? l * (1 + s): l + s - l * s;
+				var p = 2 * l - q;
+				r = hanulse.utils.hueToRgb(p, q, h + 1 / 3);
+				g = hanulse.utils.hueToRgb(p, q, h);
+				b = hanulse.utils.hueToRgb(p, q, h - 1 / 3);
+			}
+
+			return {
+				'r': Math.round(r * 255),
+				'g': Math.round(g * 255),
+				'b': Math.round(b * 255)
+			}
+		},
+		'rgbToHsl': function(r, g, b) {
+			r /= 255, g /= 255, b /= 255;
+			var max = Math.max(r, g, b), min = Math.min(r, g, b);
+			var h, s, l = (max + min) / 2;
+
+			if (max == min) {
+				h = s = 0; // achromatic
+			} else {
+				var d = max - min;
+				s = l > 0.5? d / (2 - max - min): d / (max + min);
+				switch (max) {
+					case r: h = (g - b) / d + (g < b? 6: 0); break;
+					case g: h = (b - r) / d + 2; break;
+					case b: h = (r - g) / d + 4; break;
+				}
+				h /= 6;
+			}
+
+			return {'h': h, 's': s, 'l': l};
 		}
 	};
 })();
 
 $(document).ready(function() {
 	$('[data-class="hanulse.group"]').each(function(index, element) {
+		console.log("Create Hanulse Group")
 		new $hanulse.group($(element));
 	})
 
 	$('[data-class="hanulse.cell"]').each(function(index, element) {
+		console.log("Create Hanulse Cell")
 		new $hanulse.cell($(element));
 	})
 
 	$('[data-class="hanulse.menu"]').each(function(index, element) {
+		console.log("Create Hanulse Menu")
 		new $hanulse.menu($(element));
 	})
 
 	$('[data-class="hanulse.menu.item"]').each(function(index, element) {
+		console.log("Create Hanulse Menu Item")
 		new $hanulse.menu.item($(element));
 	})
 
 	$('[data-class="hanulse.memo"]').each(function(index, element) {
+		console.log("Create Hanulse Memo")
 		new $hanulse.memo($(element));
 	})
 
 	$('[data-class="hanulse.image"]').each(function(index, element) {
+		console.log("Create Hanulse Image")
 		new $hanulse.image($(element));
 	})
 
 	$('[data-class="hanulse.input"]').each(function(index, element) {
+		console.log("Create Hanulse Input")
 		new $hanulse.input($(element));
 	})
 });

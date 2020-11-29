@@ -1,6 +1,9 @@
 [data-class] {
 	display: none;
 }
+/*
+	Hanulse Group
+*/
 .hanulse-group {
 	display: block;
 	position: absolute;
@@ -11,6 +14,9 @@
 	-webkit-user-select: none;
 	user-select: none
 }
+/*
+	Hanulse Cell
+*/
 .hanulse-cell {
 	display: block;
 	position: absolute;
@@ -21,23 +27,53 @@
 	-webkit-user-select: none;
 	user-select: none
 }
+.hanulse-cell_ground {
+	fill: rgba(255, 255, 255, 0.1);
+	stroke: rgb(82, 76, 18);
+	stroke-width: 0.5;
+	fill-rule: evenodd;
+	pointer-events: auto;
+}
+.hanulse-cell_wall-left {
+	fill: rgba(255, 255, 255, 0.1);
+	stroke: rgb(82, 76, 18);
+	stroke-width: 0.5;
+	fill-rule: evenodd;
+	pointer-events: auto;
+}
+.hanulse-cell_wall-right {
+	fill: rgba(255, 255, 255, 0.1);
+	stroke: rgb(82, 76, 18);
+	stroke-width: 0.5;
+	fill-rule: evenodd;
+	pointer-events: auto;
+}
 .hanulse-cell_ground:hover {
-	fill: #FFC800;
+	stroke: rgb(255, 255, 255, 0.4);
+	stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 .hanulse-cell_ground:active {
-	fill: #00C8FF;
+	fill: rgba(255, 255, 255, 0.4);
 }
 .hanulse-cell_wall-left:hover {
-	fill: #DDA600;
+	stroke: rgb(255, 255, 255, 0.4);
+	stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 .hanulse-cell_wall-left:active {
-	fill: #00A6DD;
+	fill: rgba(255, 255, 255, 0.4);
 }
 .hanulse-cell_wall-right:hover {
-	fill: #EEB700;
+	stroke: rgb(255, 255, 255, 0.4);
+	stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 .hanulse-cell_wall-right:active {
-	fill: #00B7EE;
+	fill: rgba(255, 255, 255, 0.4);
 }
 .hanulse-cell_text-wrap {
 	position: absolute;
@@ -59,6 +95,9 @@
 	padding: 4px 8px;
 	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
 }
+/*
+	Hanulse Dialog
+*/
 .hanulse-dialog {
 	position: absolute;
 	left: 0px;
@@ -82,6 +121,9 @@
 	background-color: rgba(0, 0, 0, 0.2);
 	z-index: -1;
 }
+/*
+	Hanulse Menu
+*/
 .hanulse-menu_list {
 	position: absolute;
 	color: rgba(255, 255, 255, 0.8);
@@ -92,6 +134,9 @@
 	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
 	z-index: 1;
 }
+/*
+	Hanulse Menu Item
+*/
 .hanulse-menu-item {
 	display: block;
 	height: 20px;
@@ -146,6 +191,9 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
+/*
+	Hanulse Memo
+*/
 .hanulse-memo_box {
 	position: absolute;
 	color: rgba(255, 255, 255, 0.8);
@@ -164,6 +212,9 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+/*
+	Hanulse Image
+*/
 .hanulse-image_box {
 	position: absolute;
 	color: rgba(255, 255, 255, 0.8);
@@ -172,6 +223,9 @@
 	border-radius: 4px;
 	box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.4);
 }
+/*
+	Hanulse Input
+*/
 .hanulse-input_box {
 	position: absolute;
 	color: rgba(255, 255, 255, 0.8);
@@ -220,3 +274,342 @@
 	background-color: #003366;
 	box-shadow: 0px 0px 5px 0px #003366;
 }
+/*
+	Hanulse Effect
+*/
+/* Effect float */
+@keyframes hanulse-effect-float_ground {
+	0% {opacity: 0.0; transform: translateY(0px);}
+	50% {opacity: 0.5; transform: translateY(0px);}
+	80% {opacity: 1.0; transform: translateY(-5px);}
+	100% {opacity: 0.0; transform: translateY(-15px);}
+}
+.hanulse-effect-float_ground {
+	fill: rgba(255, 255, 255, 0.4);
+	opacity: 0.0;
+	animation-name: hanulse-effect-float_ground;
+	animation-delay: 0.0s;
+	animation-duration: 2.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+.hanulse-effect-float_ground.hanulse_i1 {animation-delay: 0.0s; animation-duration: 2.0s;}
+.hanulse-effect-float_ground.hanulse_i2 {animation-delay: 0.5s; animation-duration: 2.0s;}
+.hanulse-effect-float_ground.hanulse_i3 {animation-delay: 1.0s; animation-duration: 2.0s;}
+/* Effect box */
+@keyframes hanulse-effect-box_center {
+	0% {opacity: 0.0; fill: url(#hanulse-effect-box_gradient-center);}
+	50% {opacity: 1.0; fill: url(#hanulse-effect-box_gradient-center);}
+	100% {opacity: 0.0; fill: url(#hanulse-effect-box_gradient-center);}
+}
+.hanulse-effect-box_center {
+	fill: rgba(255, 255, 255, 0.0);
+	opacity: 0.0;
+	animation-name: hanulse-effect-box_center;
+	animation-delay: 0.0s;
+	animation-duration: 2.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+.hanulse-effect-box_center.hanulse_i1 {animation-delay: 0.0s; animation-duration: 2.0s;}
+.hanulse-effect-box_center.hanulse_i2 {animation-delay: 0.4s; animation-duration: 2.0s;}
+.hanulse-effect-box_center.hanulse_i3 {animation-delay: 0.8s; animation-duration: 2.0s;}
+.hanulse-effect-box_center.hanulse_i4 {animation-delay: 1.2s; animation-duration: 2.0s;}
+.hanulse-effect-box_center.hanulse_i5 {animation-delay: 1.6s; animation-duration: 2.0s;}
+/* Effect box */
+@keyframes hanulse-effect-flash_ground {
+	0% {opacity: 0.0;}
+	50% {opacity: 1.0;}
+	90% {opacity: 0.0;}
+}
+.hanulse-effect-flash_ground {
+	fill: rgba(255, 0, 0, 0.4);
+	opacity: 0.0;
+	animation-name: hanulse-effect-flash_ground;
+	animation-delay: 0.0s;
+	animation-duration: 1.0s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+}
+/* Effect circle(ground) */
+@keyframes hanulse-effect-circle_ground-1 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(34px, 17px);}
+}
+@keyframes hanulse-effect-circle_ground-2 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(34px, -17px);}
+}
+@keyframes hanulse-effect-circle_ground-3 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(-34px, 17px);}
+}
+@keyframes hanulse-effect-circle_ground-4 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(-34px, -17px);}
+}
+.hanulse-effect-circle_ground-white {
+	fill: rgba(255, 255, 255, 1.0);
+	opacity: 0.0;
+	/*animation-name: hanulse-effect-circle_ground-1;*/
+	animation-delay: 0.0s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-effect-circle_ground-white.hanulse_i1 {animation-name: hanulse-effect-circle_ground-1;}
+.hanulse-effect-circle_ground-white.hanulse_i2 {animation-name: hanulse-effect-circle_ground-2;}
+.hanulse-effect-circle_ground-white.hanulse_i3 {animation-name: hanulse-effect-circle_ground-3;}
+.hanulse-effect-circle_ground-white.hanulse_i4 {animation-name: hanulse-effect-circle_ground-4;}
+.hanulse-effect-circle_ground-red {
+	fill: rgba(255, 0, 0, 0.8);
+	opacity: 0.0;
+	/*animation-name: hanulse-effect-circle_ground-1;*/
+	animation-delay: 0.4s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-effect-circle_ground-red.hanulse_i1 {animation-name: hanulse-effect-circle_ground-1;}
+.hanulse-effect-circle_ground-red.hanulse_i2 {animation-name: hanulse-effect-circle_ground-2;}
+.hanulse-effect-circle_ground-red.hanulse_i3 {animation-name: hanulse-effect-circle_ground-3;}
+.hanulse-effect-circle_ground-red.hanulse_i4 {animation-name: hanulse-effect-circle_ground-4;}
+/* Effect circle(wall-right) */
+@keyframes hanulse-effect-circle_wall-right-1 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(34px, 17px);}
+}
+@keyframes hanulse-effect-circle_wall-right-2 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(0px, 31px);}
+}
+@keyframes hanulse-effect-circle_wall-right-3 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(-34px, -17px);}
+}
+@keyframes hanulse-effect-circle_wall-right-4 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(0px, -31px);}
+}
+.hanulse-effect-circle_wall-right-white {
+	fill: rgba(255, 255, 255, 1.0);
+	opacity: 0.0;
+	/*animation-name: hanulse-effect-circle_wall-right-1;*/
+	animation-delay: 0.0s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-effect-circle_wall-right-white.hanulse_i1 {animation-name: hanulse-effect-circle_wall-right-1;}
+.hanulse-effect-circle_wall-right-white.hanulse_i2 {animation-name: hanulse-effect-circle_wall-right-2;}
+.hanulse-effect-circle_wall-right-white.hanulse_i3 {animation-name: hanulse-effect-circle_wall-right-3;}
+.hanulse-effect-circle_wall-right-white.hanulse_i4 {animation-name: hanulse-effect-circle_wall-right-4;}
+.hanulse-effect-circle_wall-right-red {
+	fill: rgba(255, 0, 0, 0.8);
+	opacity: 0.0;
+	/*animation-name: hanulse-effect-circle_wall-right-1;*/
+	animation-delay: 0.4s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-effect-circle_wall-right-red.hanulse_i1 {animation-name: hanulse-effect-circle_wall-right-1;}
+.hanulse-effect-circle_wall-right-red.hanulse_i2 {animation-name: hanulse-effect-circle_wall-right-2;}
+.hanulse-effect-circle_wall-right-red.hanulse_i3 {animation-name: hanulse-effect-circle_wall-right-3;}
+.hanulse-effect-circle_wall-right-red.hanulse_i4 {animation-name: hanulse-effect-circle_wall-right-4;}
+/* Effect circle(wall-left) */
+@keyframes hanulse-effect-circle_wall-left-1 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(34px, -17px);}
+}
+@keyframes hanulse-effect-circle_wall-left-2 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(0px, 31px);}
+}
+@keyframes hanulse-effect-circle_wall-left-3 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(-34px, 17px);}
+}
+@keyframes hanulse-effect-circle_wall-left-4 {
+	0% {opacity: 0.0; transform: translate(0px, 0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(0px, -31px);}
+}
+.hanulse-effect-circle_wall-left-white {
+	fill: rgba(255, 255, 255, 1.0);
+	opacity: 0.0;
+	/*animation-name: hanulse-effect-circle_wall-left-1;*/
+	animation-delay: 0.0s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-effect-circle_wall-left-white.hanulse_i1 {animation-name: hanulse-effect-circle_wall-left-1;}
+.hanulse-effect-circle_wall-left-white.hanulse_i2 {animation-name: hanulse-effect-circle_wall-left-2;}
+.hanulse-effect-circle_wall-left-white.hanulse_i3 {animation-name: hanulse-effect-circle_wall-left-3;}
+.hanulse-effect-circle_wall-left-white.hanulse_i4 {animation-name: hanulse-effect-circle_wall-left-4;}
+.hanulse-effect-circle_wall-left-red {
+	fill: rgba(255, 0, 0, 0.8);
+	opacity: 0.0;
+	/*animation-name: hanulse-effect-circle_wall-left-1;*/
+	animation-delay: 0.4s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-effect-circle_wall-left-red.hanulse_i1 {animation-name: hanulse-effect-circle_wall-left-1;}
+.hanulse-effect-circle_wall-left-red.hanulse_i2 {animation-name: hanulse-effect-circle_wall-left-2;}
+.hanulse-effect-circle_wall-left-red.hanulse_i3 {animation-name: hanulse-effect-circle_wall-left-3;}
+.hanulse-effect-circle_wall-left-red.hanulse_i4 {animation-name: hanulse-effect-circle_wall-left-4;}
+/* Effect warp */
+@keyframes hanulse-effect-warp_center {
+	0% {opacity: 0.3; fill: url(#hanulse-effect-warp_gradient-center);}
+	20% {opacity: 0.6; fill: url(#hanulse-effect-warp_gradient-center);}
+	50% {opacity: 0.3; fill: url(#hanulse-effect-warp_gradient-center);}
+	70% {opacity: 0.7; fill: url(#hanulse-effect-warp_gradient-center);}
+	100% {opacity: 0.3; fill: url(#hanulse-effect-warp_gradient-center);}
+}
+@keyframes hanulse-effect-warp_small-band {
+	0% {opacity: 0.0; transform: translateY(40px);}
+	30% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translateY(-100px);}
+}
+@keyframes hanulse-effect-warp_large-band {
+	30% {opacity: 0.0; transform: translateY(40px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translateY(-100px);}
+}
+.hanulse-effect-warp_center {
+	animation-name: hanulse-effect-warp_center;
+	animation-delay: 0.0s;
+	animation-duration: 1.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-effect-warp_small-band {
+	fill: rgba(255, 255, 255, 0.6);
+	opacity: 0.0;
+	animation-name: hanulse-effect-warp_small-band;
+	animation-delay: 0.0s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-out;
+}
+.hanulse-effect-warp_small-band.hanulse_i1 {animation-delay: 0.0s; animation-duration: 0.8s;}
+.hanulse-effect-warp_small-band.hanulse_i2 {animation-delay: 0.4s; animation-duration: 0.8s;}
+.hanulse-effect-warp_large-band {
+	fill: rgba(255, 255, 255, 0.4);
+	opacity: 0.0;
+	animation-name: hanulse-effect-warp_large-band;
+	animation-delay: 0.2s;
+	animation-duration: 1.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-out;
+}
+/* Effect warp-big */
+@keyframes hanulse-effect-warp-big_center {
+	0% {opacity: 0.3; fill: url(#hanulse-effect-warp-big_gradient-center-white);}
+	10% {opacity: 0.6; fill: url(#hanulse-effect-warp-big_gradient-center-white);}
+	25% {opacity: 0.3; fill: url(#hanulse-effect-warp-big_gradient-center-white);}
+	27% {opacity: 0.0; fill: url(#hanulse-effect-warp-big_gradient-center-white);}
+	29% {opacity: 0.3; fill: url(#hanulse-effect-warp-big_gradient-center-red);}
+	35% {opacity: 0.7; fill: url(#hanulse-effect-warp-big_gradient-center-red);}
+	45% {opacity: 0.3; fill: url(#hanulse-effect-warp-big_gradient-center-red);}
+	50% {opacity: 0.0; fill: url(#hanulse-effect-warp-big_gradient-center-red);}
+	55% {opacity: 0.3; fill: url(#hanulse-effect-warp-big_gradient-center-blue);}
+	60% {opacity: 0.6; fill: url(#hanulse-effect-warp-big_gradient-center-blue);}
+	75% {opacity: 0.3; fill: url(#hanulse-effect-warp-big_gradient-center-blue);}
+	77% {opacity: 0.0; fill: url(#hanulse-effect-warp-big_gradient-center-blue);}
+	79% {opacity: 0.3; fill: url(#hanulse-effect-warp-big_gradient-center-yellow);}
+	85% {opacity: 0.7; fill: url(#hanulse-effect-warp-big_gradient-center-yellow);}
+	100% {opacity: 0.3; fill: url(#hanulse-effect-warp-big_gradient-center-yellow);}
+}
+@keyframes hanulse-effect-warp-big_small-band {
+	0% {opacity: 0.0; transform: translateY(40px);}
+	30% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translateY(-100px);}
+}
+@keyframes hanulse-effect-warp-big_large-band {
+	30% {opacity: 0.0; transform: translateY(40px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translateY(-100px);}
+}
+@keyframes hanulse-effect-warp-big_xlarge-band {
+	30% {opacity: 0.0; transform: translateY(0px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translateY(-140px);}
+}
+@keyframes hanulse-effect-warp-big_stick {
+	30% {opacity: 0.0; transform: translateY(40px);}
+	50% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translateY(-120px);}
+}
+.hanulse-effect-warp-big_center {
+	animation-name: hanulse-effect-warp-big_center;
+	animation-delay: 0.0s;
+	animation-duration: 2.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-effect-warp-big_small-band {
+	fill: rgba(255, 255, 255, 0.6);
+	opacity: 0.0;
+	animation-name: hanulse-effect-warp-big_small-band;
+	animation-delay: 0.0s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-out;
+}
+.hanulse-effect-warp-big_small-band.hanulse_i1 {animation-delay: 0.0s; animation-duration: 0.8s;}
+.hanulse-effect-warp-big_small-band.hanulse_i2 {animation-delay: 0.4s; animation-duration: 0.8s;}
+.hanulse-effect-warp-big_large-band {
+	fill: rgba(255, 255, 255, 0.4);
+	opacity: 0.0;
+	animation-name: hanulse-effect-warp-big_large-band;
+	animation-delay: 0.0s;
+	animation-duration: 1.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-out;
+}
+.hanulse-effect-warp-big_large-band.hanulse_i1 {fill: rgba(255, 255, 200, 0.4); animation-delay: 0.2s; animation-duration: 1.0s;}
+.hanulse-effect-warp-big_large-band.hanulse_i2 {fill: rgba(200, 255, 255, 0.4); animation-delay: 0.4s; animation-duration: 1.2s;}
+.hanulse-effect-warp-big_xlarge-band {
+	fill: rgba(255, 255, 255, 0.4);
+	opacity: 0.0;
+	animation-name: hanulse-effect-warp-big_large-band;
+	animation-delay: 0.2s;
+	animation-duration: 1.2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-out;
+}
+.hanulse-effect-warp-big_xlarge-band.hanulse_i1 {fill: rgba(255, 255, 200, 0.4); animation-delay: 0.2s; animation-duration: 1.2s;}
+.hanulse-effect-warp-big_xlarge-band.hanulse_i2 {fill: rgba(255, 200, 255, 0.4); animation-delay: 0.6s; animation-duration: 1.4s;}
+.hanulse-effect-warp-big_xlarge-band.hanulse_i3 {fill: rgba(200, 255, 255, 0.4); animation-delay: 1.2s; animation-duration: 1.6s;}
+.hanulse-effect-warp-big_stick {
+	fill: rgba(255, 255, 255, 0.5);
+	opacity: 0.0;
+	animation-name: hanulse-effect-warp-big_stick;
+	animation-delay: 1.2s;
+	animation-duration: 1.6s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-out;
+}
+.hanulse-effect-warp-big_stick.hanulse_i1 {animation-delay: 0.0s; animation-duration: 1.1s;}
+.hanulse-effect-warp-big_stick.hanulse_i2 {animation-delay: 0.2s; animation-duration: 1.2s;}
+.hanulse-effect-warp-big_stick.hanulse_i3 {animation-delay: 0.4s; animation-duration: 1.3s;}
+.hanulse-effect-warp-big_stick.hanulse_i4 {animation-delay: 0.6s; animation-duration: 1.4s;}
+.hanulse-effect-warp-big_stick.hanulse_i5 {animation-delay: 0.8s; animation-duration: 1.5s;}
+.hanulse-effect-warp-big_stick.hanulse_i6 {animation-delay: 1.0s; animation-duration: 1.6s;}
+.hanulse-effect-warp-big_stick.hanulse_i7 {animation-delay: 1.2s; animation-duration: 1.7s;}
+.hanulse-effect-warp-big_stick.hanulse_i8 {animation-delay: 1.4s; animation-duration: 1.8s;}
