@@ -11,9 +11,9 @@ var $hanulse = new (function hanulse(env) {
 	var CELL_DEPTH = 31;
 	var CELL_WIDTH_HALF = 34;
 	var CELL_HEIGHT_HALF = 17;
-	var SIGHT_WIDTH = 225;
-	var SIGHT_HEIGHT = 150;
-	var FOG_SIZE = 80;
+	var SIGHT_WIDTH = 300;
+	var SIGHT_HEIGHT = 200;
+	var FOG_SIZE = 120;
 	var FOG_AMOUNT = 1 / (FOG_SIZE + 1);
 
 	// Private utils
@@ -354,6 +354,7 @@ var $hanulse = new (function hanulse(env) {
 		fields.border = getData($e, 'border');
 		fields.event = getData($e, 'event');
 		fields.texture = getData($e, 'texture');
+		fields.prop = getData($e, 'prop');
 		fields.opacity = getNumberData($e, 'opacity', 1);
 		fields.effect = getData($e, 'effect'); // none, simple, box, flash(todo), warp, warp-big(todo), fly(todo), bubble(todo), shine(todo)
 		fields.x = getNumberData($e, 'x', 0);
@@ -371,10 +372,10 @@ var $hanulse = new (function hanulse(env) {
 			var fog = getFog(baseLeft, baseTop, left, top);
 			var opacity = fields.opacity + fog;
 			if (opacity == 1) {
-				$shape.css('opacity', '');
+				$e.css('opacity', '');
 				$e.show();
 			} else if (opacity > 0) {
-				$shape.css('opacity', opacity);
+				$e.css('opacity', opacity);
 				$e.show();
 			} else {
 				$e.hide();
@@ -400,20 +401,14 @@ var $hanulse = new (function hanulse(env) {
 		if (fields.link) {
 			$shape.find('[data-tag="link"]').attr({'href': fields.link, 'alt': crlfToSpace(fields.text)}).on("dragstart", preventDefault);
 		} else {
-			$shape.find('[data-tag="link"]').attr({'href': 'javascript:void(0)', 'alt': crlfToSpace(fields.text)}).on("dragstart", preventDefault);
+			$shape.find('[data-tag="link"]').attr({'href': 'javascript:void(0)', 'alt': crlfToSpace(fields.text)}).on("dragstart click contextmenu", preventDefault);
 		}
 		$e.append($shape)
-		if (fields.text) {
-			var $textWrap = $('<div>').addClass('hanulse-cell_text-wrap').css({'left': CELL_WIDTH_HALF - 200 / 2, 'top': -CELL_DEPTH - 12, 'z-index': 1})
-			var $text = $('<span>').addClass('hanulse-cell_text').text(crlfToSpace(fields.text))
-			$textWrap.append($text)
-			$e.append($textWrap)
-		}
 
+		// Accessories
 		if (fields.border == 'none') {
 			$shape.find('[data-tag="shape"]').css('stroke', 'none');
 		}
-
 		if (fields.event == 'none') {
 			$shape.find('[data-tag="link"]').css('pointer-events', 'none');
 			$shape.find('[data-tag="shape"]').css('pointer-events', 'none');
@@ -421,7 +416,10 @@ var $hanulse = new (function hanulse(env) {
 		if (fields.texture) {
 			$shape.find('[data-tag="shape"]').css('fill', 'url(#' + fields.texture + ')');
 		}
-
+		if (fields.prop) {
+			var $prop = $('<div>').addClass('hanulse-prop').addClass('hanulse-prop_' + fields.prop);
+			$e.append($prop);
+		}
 		var $effect = null;
 		if (fields.effect == 'simple') {
 			if (fields.type == 'ground') $effect = $(SVG_EFFECT_CIRCLE);
@@ -449,6 +447,12 @@ var $hanulse = new (function hanulse(env) {
 		else if (fields.effect == 'warp') $effect = $(SVG_EFFECT_WARP);
 		else if (fields.effect == 'warp-big') $effect = $(SVG_EFFECT_WARP_BIG);
 		if ($effect) $e.append($effect);
+		if (fields.text) {
+			var $textWrap = $('<div>').addClass('hanulse-cell_text-wrap').css({'left': CELL_WIDTH_HALF - 200 / 2, 'top': -CELL_DEPTH - 12, 'z-index': 1})
+			var $text = $('<span>').addClass('hanulse-cell_text').text(crlfToSpace(fields.text))
+			$textWrap.append($text)
+			$e.append($textWrap)
+		}
 
 		// Set shape style
 		if (fields.menu) $shape.css('cursor', 'pointer');
@@ -456,6 +460,7 @@ var $hanulse = new (function hanulse(env) {
 		if (fields.image) $shape.css('cursor', 'pointer');
 		if (fields.input) $shape.css('cursor', 'pointer');
 
+		// Default updating
 		updateFog($shape, 0, 0, left, top);
 
 		// Initialize functions

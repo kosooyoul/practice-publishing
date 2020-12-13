@@ -1,0 +1,69 @@
+.hanulse-background {
+	position: absolute; left: 0px; top: 0px; z-index: 1; point-events: none;
+}
+
+.hanulse-background_moon {
+	position: absolute;
+}
+
+.hanulse-background_moon-shape {
+	width: 60px;
+	height: 40px;
+	overflow: visible;
+}
+
+@keyframes hanulse-background_flying-pattern-1 {
+	0% {opacity: 0.0; transform:  translate(0px, 0px)  ;}
+	20% {opacity: 1.0;}
+	80% {opacity: 1.0;}
+	100% {opacity: 0.0; transform:  translate(1000px, 300px) ;}
+}
+@keyframes hanulse-background_flying-pattern-2 {
+	0% {opacity: 0.0; transform: translate(0px, 300px);}
+	20% {opacity: 1.0;}
+	80% {opacity: 1.0;}
+	100% {opacity: 0.0; transform: translate(1000px, 0px);}
+}
+@keyframes hanulse-background_flying-wing-swing {
+	0% {transform: scaleY(1.0);}
+	50% {transform: scaleY(-1.0);}
+	100% {transform: scaleY(1.0);}
+}
+.hanulse-background_flying-pattern-1 {
+	position: absolute;
+	opacity: 0.0;
+	animation-name: hanulse-background_flying-pattern-1;
+	animation-delay: 0.0s;
+	animation-duration: 16.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+.hanulse-background_flying-pattern-2 {
+	position: absolute;
+	opacity: 0.0;
+	animation-name: hanulse-background_flying-pattern-2;
+	animation-delay: 0.0s;
+	animation-duration: 16.0s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+.hanulse-background_flying-shape {
+	width: 15px;
+	height: 20px;
+	overflow: visible;
+}
+.hanulse-background_flying-wing {
+	fill: white;
+	animation-name: hanulse-background_flying-wing-swing;
+	transform-origin: 0px 10px;
+	animation-delay: 0.0s;
+	animation-duration: 0.8s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+.hanulse-background_flying-head {
+	fill: white;
+}
+.hanulse-background_flying-tail {
+	fill: white;
+}

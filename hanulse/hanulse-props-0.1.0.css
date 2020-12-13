@@ -1,0 +1,27 @@
+.hanulse-prop {
+	position: absolute;
+	background-position: left top;
+	background-size: 100%;
+}
+
+.hanulse-prop_warp {
+	background-image: url("../props/warp.png");
+	width: 72px;
+	height: 42px;
+	left: -2px;
+	top: -8px;
+}
+.hanulse-prop_bush {
+	background-image: url("../props/bush.png");
+	width: 25px;
+	height: 13px;
+	left: 21px;
+	top: 10px;
+}
+.hanulse-prop_tree {
+	background-image: url("../props/tree.png");
+	width: 99px;
+	height: 109px;
+	left: -16px;
+	top: -86px;
+}

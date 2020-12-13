@@ -36,6 +36,7 @@
 .hanulse-cell_shape-detail {
 	stroke: rgb(82, 76, 18);
 	stroke-width: 0.5;
+	fill: transparent;
 	fill-rule: evenodd;
 	stroke-linecap: round;
 	stroke-linejoin: round;
@@ -587,3 +588,9 @@
 .hanulse-effect-warp-big_stick.hanulse_i6 {animation-delay: 1.0s; animation-duration: 1.6s;}
 .hanulse-effect-warp-big_stick.hanulse_i7 {animation-delay: 1.2s; animation-duration: 1.7s;}
 .hanulse-effect-warp-big_stick.hanulse_i8 {animation-delay: 1.4s; animation-duration: 1.8s;}
+
+.hanulse-texture-defines {
+	width: 1px;
+	height: 1px;
+	z-index: -1;
+}
