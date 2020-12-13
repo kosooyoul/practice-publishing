@@ -100,7 +100,8 @@
 	Hanulse Menu
 */
 .hanulse-menu_list {
-	position: absolute;
+	position: relative;
+	width: 280px;
 	color: rgba(255, 255, 255, 0.8);
 	background-color: rgba(0, 0, 60, 0.6);
 	border: 1px solid rgba(255, 255, 255, 0.8);
@@ -149,6 +150,7 @@
 	width: 160px;
 	font-size: 13px;
 	line-height: 18px;
+	text-align: left;
 	vertical-align: middle;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -170,7 +172,8 @@
 	Hanulse Memo
 */
 .hanulse-memo_box {
-	position: absolute;
+	position: relative;
+	width: 280px;
 	color: rgba(255, 255, 255, 0.8);
 	background-color: rgba(0, 0, 60, 0.6);
 	border: 1px solid rgba(255, 255, 255, 0.8);
@@ -181,6 +184,7 @@
 	position: relative;
 	font-size: 13px;
 	line-height: 24px;
+	text-align: left;
 	vertical-align: middle;
 	margin: 8px 12px;
     word-break: keep-all;
@@ -192,6 +196,11 @@
 */
 .hanulse-image_box {
 	position: absolute;
+	width: 400px;
+	height: 300px;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-size: contain;
 	color: rgba(255, 255, 255, 0.8);
 	background-color: rgba(0, 0, 60, 0.6);
 	border: 1px solid rgba(255, 255, 255, 0.8);
@@ -202,7 +211,8 @@
 	Hanulse Input
 */
 .hanulse-input_box {
-	position: absolute;
+	position: relative;
+	width: 280px;
 	color: rgba(255, 255, 255, 0.8);
 	background-color: rgba(0, 0, 60, 0.6);
 	border: 1px solid rgba(255, 255, 255, 0.8);
@@ -213,6 +223,7 @@
 	position: relative;
 	font-size: 13px;
 	line-height: 24px;
+	text-align: left;
 	vertical-align: middle;
 	margin: 4px 12px;
 }

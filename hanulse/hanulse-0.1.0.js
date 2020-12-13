@@ -15,7 +15,7 @@ var $hanulse = new (function hanulse(env) {
 	var SIGHT_HEIGHT = 200;
 	var FOG_SIZE = 120;
 	var FOG_AMOUNT = 1 / (FOG_SIZE + 1);
-	var FOG_UPDATING_TIME = 150;
+	var FOG_UPDATING_TIME = 80;
 
 	// Private utils
 	var crlfToBr = function(text) {
@@ -311,9 +311,11 @@ var $hanulse = new (function hanulse(env) {
 
 			var done = false;
 			var updateLoop = function() {
+				var time = +new Date();
 				childrenCell.forEach(function(childCell) {
 					childCell.updateFog(location.left, location.top);
 				});
+				console.log(+new Date() - time);
 				if (done) return;
 
 				setTimeout(updateLoop, FOG_UPDATING_TIME);
@@ -573,16 +575,19 @@ var $hanulse = new (function hanulse(env) {
 		hanulse.dialog.call(this, $e);
 
 		// Create child elements
-		var $list = $('<div>').addClass('hanulse-menu_list').css('width', 280);
+		var $list = $('<div>').addClass('hanulse-menu_list');
 		$list.append($e.children('[data-class="hanulse.menu.item"]'));
-		$e.append($list);
+
+		var $table = $('<table><tbody><tr><td align="center"></td></tr></tbody></table>').css({'width': '100%', 'height': '100%', 'pointer-events': 'none'});
+		$table.find('td').append($list);
+		$e.append($table);
 
 		// Instance functions
-		var parentShow = this.show;
-		this.show = function(left, top) {
-			$list.css({'left': '50%', 'top': '50%', 'margin-left': -140, 'margin-top': -140});
-			parentShow.call(_this);
-		};
+		// var parentShow = this.show;
+		// this.show = function(left, top) {
+		// 	$list.css({'left': '50%', 'top': '50%', 'margin-left': -140, 'margin-top': -140});
+		// 	parentShow.call(_this);
+		// };
 	};
 
 	// Define class menu item
@@ -632,10 +637,13 @@ var $hanulse = new (function hanulse(env) {
 		fields.text = getData($e, 'text');
 
 		// Create child elements
-		var $box = $('<div>').addClass('hanulse-memo_box').css('width', 280);
+		var $box = $('<div>').addClass('hanulse-memo_box');
 		var $text = $('<div>').addClass('hanulse-memo_text').html(crlfToBr(fields.text));
 		$box.append($text);
-		$e.append($box);
+
+		var $table = $('<table><tbody><tr><td align="center"></td></tr></tbody></table>').css({'width': '100%', 'height': '100%', 'pointer-events': 'none'});
+		$table.find('td').append($box);
+		$e.append($table);
 
 		// Initialize events
 		$box.on('click', function() {
@@ -643,11 +651,11 @@ var $hanulse = new (function hanulse(env) {
 		});
 
 		// Instance functions
-		var parentShow = this.show;
-		this.show = function(left, top) {
-			$box.css({'left': '50%', 'top': '50%', 'margin-left': -140, 'margin-top': -140});
-			parentShow.call(_this);
-		};
+		// var parentShow = this.show;
+		// this.show = function(left, top) {
+		// 	$box.css({'left': '50%', 'top': '50%', 'margin-left': -140, 'margin-top': -140});
+		// 	parentShow.call(_this);
+		// };
 	};
 
 	// Define class image
@@ -666,14 +674,11 @@ var $hanulse = new (function hanulse(env) {
 		fields.src = getData($e, 'src');
 
 		// Create child elements
-		var $box = $('<div>').addClass('hanulse-image_box').css({
-			'width': 400, 'height': 300,
-			'background-image': 'url("' + fields.src + '")',
-			'background-repeat': 'no-repeat',
-			'background-position': '50%',
-			'background-size': 'contain'
-		});
-		$e.append($box);
+		var $box = $('<div>').addClass('hanulse-image_box').css('background-image', 'url("' + fields.src + '")');
+
+		var $table = $('<table><tbody><tr><td align="center"></td></tr></tbody></table>').css({'width': '100%', 'height': '100%', 'pointer-events': 'none'});
+		$table.find('td').append($box);
+		$e.append($table);
 
 		// Initialize events
 		$box.on('click', function() {
@@ -681,11 +686,11 @@ var $hanulse = new (function hanulse(env) {
 		});
 
 		// Instance functions
-		var parentShow = this.show;
-		this.show = function(left, top) {
-			$box.css({'left': '50%', 'top': '50%', 'margin-left': -200, 'margin-top': -150});
-			parentShow.call(_this);
-		};
+		// var parentShow = this.show;
+		// this.show = function(left, top) {
+		// 	$box.css({'left': '50%', 'top': '50%', 'margin-left': -200, 'margin-top': -150});
+		// 	parentShow.call(_this);
+		// };
 	};
 
 	// Define class input
@@ -707,14 +712,17 @@ var $hanulse = new (function hanulse(env) {
 		fields.callback = getData($e, 'callback');
 
 		// Create child elements
-		var $box = $('<div>').addClass('hanulse-input_box').css('width', 280);
+		var $box = $('<div>').addClass('hanulse-input_box');
 		var $text = $('<div>').addClass('hanulse-input_text').html(crlfToBr(fields.text));
 		var $input = $('<input type="text">').addClass('hanulse-input_input').attr('type', fields.type);
 		var $submit = $('<input type="button">').addClass('hanulse-input_submit').val(fields.submit || '확인');
 		$box.append($text);
 		$box.append($input);
 		$box.append($submit);
-		$e.append($box);
+
+		var $table = $('<table><tbody><tr><td align="center"></td></tr></tbody></table>').css({'width': '100%', 'height': '100%', 'pointer-events': 'none'});
+		$table.find('td').append($box);
+		$e.append($table);
 
 		// Initialize events
 		$box.on('click', function() {
@@ -743,7 +751,7 @@ var $hanulse = new (function hanulse(env) {
 		var parentShow = this.show;
 		this.show = function(left, top) {
 			$input.val(null);
-			$box.css({'left': '50%', 'top': '50%', 'margin-left': -140, 'margin-top': -140});
+			// $box.css({'left': '50%', 'top': '50%', 'margin-left': -140, 'margin-top': -140});
 
 			parentShow.call(_this);
 
@@ -811,37 +819,37 @@ var $hanulse = new (function hanulse(env) {
 
 $(document).ready(function() {
 	$('[data-class="hanulse.group"]').each(function(index, element) {
-		console.log("Create Hanulse Group")
+		// console.log("Create Hanulse Group")
 		new $hanulse.group($(element));
 	})
 
 	$('[data-class="hanulse.cell"]').each(function(index, element) {
-		console.log("Create Hanulse Cell")
+		// console.log("Create Hanulse Cell")
 		new $hanulse.cell($(element));
 	})
 
 	$('[data-class="hanulse.menu"]').each(function(index, element) {
-		console.log("Create Hanulse Menu")
+		// console.log("Create Hanulse Menu")
 		new $hanulse.menu($(element));
 	})
 
 	$('[data-class="hanulse.menu.item"]').each(function(index, element) {
-		console.log("Create Hanulse Menu Item")
+		// console.log("Create Hanulse Menu Item")
 		new $hanulse.menu.item($(element));
 	})
 
 	$('[data-class="hanulse.memo"]').each(function(index, element) {
-		console.log("Create Hanulse Memo")
+		// console.log("Create Hanulse Memo")
 		new $hanulse.memo($(element));
 	})
 
 	$('[data-class="hanulse.image"]').each(function(index, element) {
-		console.log("Create Hanulse Image")
+		// console.log("Create Hanulse Image")
 		new $hanulse.image($(element));
 	})
 
 	$('[data-class="hanulse.input"]').each(function(index, element) {
-		console.log("Create Hanulse Input")
+		// console.log("Create Hanulse Input")
 		new $hanulse.input($(element));
 	})
 });
