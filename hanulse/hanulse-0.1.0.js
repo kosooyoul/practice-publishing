@@ -15,6 +15,7 @@ var $hanulse = new (function hanulse(env) {
 	var SIGHT_HEIGHT = 200;
 	var FOG_SIZE = 120;
 	var FOG_AMOUNT = 1 / (FOG_SIZE + 1);
+	var FOG_UPDATING_TIME = 150;
 
 	// Private utils
 	var crlfToBr = function(text) {
@@ -308,15 +309,27 @@ var $hanulse = new (function hanulse(env) {
 		this.updateLocation = function(left, top) {
 			if (!fields.relocatable) return;
 
+			var done = false;
+			var updateLoop = function() {
+				childrenCell.forEach(function(childCell) {
+					childCell.updateFog(location.left, location.top);
+				});
+				if (done) return;
+
+				setTimeout(updateLoop, FOG_UPDATING_TIME);
+			};
+
 			$locationAnimatable.stop().animate({'left': left, 'top': top}, {
 				'duration': 400,
 				'easing': 'swing',
+				'start': function() {
+					setTimeout(updateLoop, FOG_UPDATING_TIME);
+				},
 				'progress': function() {
 					$e.css({'margin-left': -location.left + fields.offsetLeft, 'margin-top': -location.top + fields.offsetTop});
-
-					childrenCell.forEach(function(childCell) {
-						childCell.updateFog(location.left, location.top);
-					});
+				},
+				'done': function() {
+					done = true;
 				}
 			});
 		};
