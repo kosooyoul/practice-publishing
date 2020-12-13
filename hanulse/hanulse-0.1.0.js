@@ -13,7 +13,7 @@ var $hanulse = new (function hanulse(env) {
 	var CELL_HEIGHT_HALF = 17;
 	var SIGHT_WIDTH = 300;
 	var SIGHT_HEIGHT = 200;
-	var FOG_SIZE = 120;
+	var FOG_SIZE = 100;
 	var FOG_AMOUNT = 1 / (FOG_SIZE + 1);
 	var FOG_UPDATING_TIME = 80;
 
@@ -75,9 +75,9 @@ var $hanulse = new (function hanulse(env) {
 		return y * CELL_HEIGHT_HALF - (d * CELL_DEPTH);
 	};
 	var getFog = function(baseLeft, baseTop, left, top) {
-		var fogX = Math.min(SIGHT_WIDTH - Math.abs(left - baseLeft) - FOG_SIZE, 0) * FOG_AMOUNT;
-		var fogY = Math.min(SIGHT_HEIGHT - Math.abs(top - baseTop) - FOG_SIZE, 0) * FOG_AMOUNT;
-		return Math.min(fogX, fogY);
+		var fogX = Math.max(Math.abs(left - baseLeft) - SIGHT_WIDTH + FOG_SIZE, 0) * FOG_AMOUNT;
+		var fogY = Math.max(Math.abs(top - baseTop) - SIGHT_HEIGHT + FOG_SIZE, 0) * FOG_AMOUNT;
+		return Math.max(fogX, fogY);
 	};
 
 	// Private html
@@ -385,12 +385,12 @@ var $hanulse = new (function hanulse(env) {
 		// Private functions
 		var updateFog = function($shape, baseLeft, baseTop, left, top) {
 			var fog = getFog(baseLeft, baseTop, left, top);
-			var opacity = fields.opacity + fog;
-			if (opacity == 1) {
-				$e.css('opacity', '');
+			var amount = (1 - fog) * fields.opacity;
+			if (amount >= 1) {
+				$e.css('filter', '');
 				$e.show();
-			} else if (opacity > 0) {
-				$e.css('opacity', opacity);
+			} else if (amount > 0) {
+				$e.css('filter', 'brightness(' + amount + ')');
 				$e.show();
 			} else {
 				$e.hide();
@@ -421,6 +421,9 @@ var $hanulse = new (function hanulse(env) {
 		$e.append($shape)
 
 		// Accessories
+		// if (fields.opacity < 1) {
+		// 	$e.css('opacity', fields.opacity);
+		// }
 		if (fields.border == 'none') {
 			$shape.find('[data-tag="shape"]').css('stroke', 'none');
 		}
